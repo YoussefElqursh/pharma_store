@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
+import '../2-choose_language_module/choose_language_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   static const String routeName = 'SplashScreenRoute';

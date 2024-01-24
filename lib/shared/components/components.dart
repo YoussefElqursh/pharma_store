@@ -14,7 +14,7 @@ Widget commonMaterialBtn({@required String? label, @required function, @required
       ),
       child: MaterialButton(
         onPressed: function,
-        height: 40.h,
+        height: 52.h,
         minWidth: width,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -79,7 +79,7 @@ Widget commonInputField({
       labelText: label!,
       labelStyle: TextStyle(color: HexColor(placeholder)),
       border: const OutlineInputBorder(),
-      contentPadding: EdgeInsets.symmetric(vertical: 8.0.h, horizontal: 15.0.w),
+      contentPadding: EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: HexColor(primaryColor), width: 2.0.w),
       ),
