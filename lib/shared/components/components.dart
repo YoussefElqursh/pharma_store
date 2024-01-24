@@ -33,7 +33,6 @@ Widget commonMaterialBtn({@required String? label, @required function, @required
       ),
     );
 
-
 //this is widget use to make stander TextBtn in app
 Widget commonTextBtn({@required String? label, @required function}) =>
     InkWell(
