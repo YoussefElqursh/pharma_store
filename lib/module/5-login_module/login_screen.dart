@@ -7,19 +7,19 @@ import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
 
 
+final _emailController = TextEditingController();
+final _passwordController = TextEditingController();
+final _formKey = GlobalKey<FormState>();
+
 class LoginScreen extends StatelessWidget {
   static const String routeName = 'LoginScreenRoute';
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
-      builder: (context) => LoginScreen(),
+      builder: (context) => const LoginScreen(),
     );
   }
 
