@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:pharma_store/shared/styles/colors.dart';
 
 void main() {
   runApp(const PharmaStore());
@@ -12,7 +14,7 @@ class PharmaStore extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: HexColor(primaryColor)),
         useMaterial3: true,
       ),
     );
