@@ -71,6 +71,7 @@ Widget commonInputField({
   String? Function(String?)? validator,
   VoidCallback? function2,
 }) => TextFormField(
+
     controller: controller,
     keyboardType: textType,
     obscureText: isPassword,

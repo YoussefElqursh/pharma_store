@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
+import '../7-create_account_module/create_account_screen.dart';
 
 
 final _emailController = TextEditingController();
@@ -152,7 +153,9 @@ class LoginScreen extends StatelessWidget {
                     ),
 
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        navigateTo(context, CreateAccountScreen.routeName);
+                      },
                       style: const ButtonStyle(
                           overlayColor: MaterialStatePropertyAll(Colors.transparent)),
                       child: Text("Create account",
