@@ -66,8 +66,7 @@ class _ResetViaEmailScreenState extends State<NewPasswordScreen> {
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height / 171.34),
-                Text('''Your new password must be different
-from previous used passwords.''',
+                Text('Your new password must be different from previous used passwords.',
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
                         fontFamily: 'Poppins',
@@ -76,7 +75,7 @@ from previous used passwords.''',
                 SizedBox(height: MediaQuery.of(context).size.height / 21.147),
                 commonInputField(
                     isPassword: true,
-                    suffixIcon: Icons.visibility,
+                    suffixIcon: Icons.visibility_off_outlined,
                     label: 'New password*',
                     textType: TextInputType.visiblePassword,
                     controller: _passController1,
@@ -90,7 +89,6 @@ from previous used passwords.''',
 
                 commonInputField(
                     isPassword: true,
-                    suffixIcon: Icons.visibility,
                     label: 'confirm password*',
 
                     textType: TextInputType.visiblePassword,

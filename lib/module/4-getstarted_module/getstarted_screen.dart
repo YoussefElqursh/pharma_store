@@ -35,18 +35,22 @@ class GetStartedScreen extends StatelessWidget {
 
               Text(getStartedHeadText,
                   style: TextStyle(
-                      fontSize: 22.sp,
                       color: HexColor(primaryColor),
-                      fontWeight: FontWeight.w600),
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "Poppins",
+                      fontStyle:  FontStyle.normal,
+                      fontSize: 22.0.sp),
                   textAlign: TextAlign.center),
 
               SizedBox(height: MediaQuery.of(context).size.height / 30),
 
               Text(getStartedBodyText,
                   style: TextStyle(
-                      fontSize: 14.sp,
                       color: HexColor(darkGray),
-                      fontWeight: FontWeight.w300),
+                      fontWeight: FontWeight.w300,
+                      fontFamily: "Poppins",
+                      fontStyle:  FontStyle.normal,
+                      fontSize: 14.0.sp),
                   textAlign: TextAlign.center),
 
               SizedBox(height: MediaQuery.of(context).size.height / 20),
@@ -78,9 +82,10 @@ class GetStartedScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: HexColor(primaryColor),
-                        fontSize: 16.sp,
-                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
+                        fontFamily: "Poppins",
+                        fontStyle:  FontStyle.normal,
+                        fontSize: 16.0.sp,
                       ),
                     ),
                   ),

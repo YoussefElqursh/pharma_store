@@ -1,4 +1,3 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,7 +28,6 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   var pageViewController = PageController();
   bool isLast = false;
-  bool backBtnIsValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,33 +37,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: TextButton(
+                style: const ButtonStyle(overlayColor: MaterialStatePropertyAll(Colors.white)),
                   onPressed: () {
                     navigateToWithoutBack(context, const GetStartedScreen());
                   },
                   child: Text(
-                    "SKIP",
-                    style: TextStyle(color: HexColor(primaryColor)),
+                    "Skip",
+                    style: TextStyle(color: HexColor(primaryColor),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Poppins",
+                        fontStyle:  FontStyle.normal,
+                        fontSize: 16.0),
                   )),
             )
           ],
-          leading: ConditionalBuilder(
-            condition: backBtnIsValid,
-            builder: (context) => Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: IconButton(
-                  onPressed: () {
-                    if (pageViewController.page != 0) {
-                      pageViewController.previousPage(
-                        duration: const Duration(milliseconds: 750),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                  },
-                  icon: Icon(Icons.arrow_back_ios_new,
-                      color: HexColor(primaryColor))),
-            ),
-            fallback: (context) => const SizedBox(),
-          ),
         ),
         body: Column(
           children: [
@@ -80,17 +65,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     } else {
                       setState(() {
                         isLast = false;
-                      });
-                    }
-
-                    if (index == boardingList.length - 1 ||
-                        index == boardingList.length - 2) {
-                      setState(() {
-                        backBtnIsValid = true;
-                      });
-                    } else {
-                      setState(() {
-                        backBtnIsValid = false;
                       });
                     }
                   },
@@ -152,9 +126,11 @@ Widget onBoardingItem(OnBoardingModel model) => Column(
           padding: const EdgeInsets.symmetric(horizontal: 35.0),
           child: Text(model.headText,
               style: TextStyle(
-                  fontSize: 22.sp,
                   color: HexColor(primaryColor),
-                  fontWeight: FontWeight.w600),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Poppins",
+                  fontStyle:  FontStyle.normal,
+                  fontSize: 22.0.sp),
               textAlign: TextAlign.center),
         )),
         SizedBox(height: 12.h),
@@ -163,9 +139,11 @@ Widget onBoardingItem(OnBoardingModel model) => Column(
           padding: const EdgeInsets.symmetric(horizontal: 35.0, vertical: 12.0),
           child: Text(model.subText,
               style: TextStyle(
-                  fontSize: 14.sp,
                   color: HexColor(darkGray),
-                  fontWeight: FontWeight.w300),
+                  fontWeight: FontWeight.w300,
+                  fontFamily: "Poppins",
+                  fontStyle:  FontStyle.normal,
+                  fontSize: 14.0.sp),
               textAlign: TextAlign.center),
         )),
         SizedBox(height: 20.h),

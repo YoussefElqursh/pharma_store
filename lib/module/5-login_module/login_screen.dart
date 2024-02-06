@@ -12,7 +12,7 @@ final _emailController = TextEditingController();
 final _passwordController = TextEditingController();
 final _formKey = GlobalKey<FormState>();
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String routeName = 'LoginScreenRoute';
 
   const LoginScreen({super.key});
@@ -24,12 +24,16 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
+class _LoginScreenState extends State<LoginScreen> {
+
+  bool isChecked = false ;
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -41,55 +45,29 @@ class LoginScreen extends StatelessWidget {
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height/9.5),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 70.w,
-                      height: 70.h,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6)),
-                        shadows: const [
-                          BoxShadow(
-                            color: Color(0x26000000),
-                            blurRadius: 3,
-                            offset: Offset(0, 1),
-                            spreadRadius: 1,
-                          ),
-                          BoxShadow(
-                            color: Color(0x4C000000),
-                            blurRadius: 2,
-                            offset: Offset(0, 1),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: setPhoto(kind: 1, path: "assets/images/Logo.svg"),
-                      ),
-                    ),
-                  ],
-                ),
+                setPhoto(kind: 1, path: "assets/images/Logo.svg", width: 50.w, height: 50.h),
 
                 SizedBox(height: MediaQuery.of(context).size.height / 20),
 
                 setPhoto(kind: 1, path: 'assets/images/Login.svg', width: 52.w, height: 22.h),
 
                 Text("Login to your registered account.",
-                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 14.sp)),
+                    style: TextStyle(
+                        color: HexColor(dark),
+                        fontWeight: FontWeight.w300,
+                        fontFamily: "Poppins",
+                        fontStyle:  FontStyle.normal,
+                        fontSize: 14.0.sp)),
 
                 SizedBox(height: MediaQuery.of(context).size.height / 20),
 
                 commonInputField(
-                    label: "Pharmacy license",
+                    label: "Username",
                     textType: TextInputType.number,
                     controller: _emailController,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'please, Enter Pharmacy license';
+                        return 'please, Enter Username';
                       }
                       return null;
                     }),
@@ -101,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                     textType: TextInputType.visiblePassword,
                     controller: _passwordController,
                     isPassword: true,
-                    suffixIcon: Icons.remove_red_eye_outlined,
+                    suffixIcon: Icons.visibility_off_outlined,
                     validator: (value) {
                       if (value!.isEmpty) {
                       return 'please, Enter Password';
@@ -111,17 +89,48 @@ class LoginScreen extends StatelessWidget {
                 ),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Checkbox(
+                        overlayColor: MaterialStatePropertyAll(HexColor(placeholder)),
+                        hoverColor: HexColor(hint),
+                        side: BorderSide(color: HexColor(hint)),
+                        value: isChecked,
+                        onChanged: (value){setState(() {
+                           isChecked = value!;
+                           });
+                        }),
+
+                    Text(
+                        "Remember me",
+                        style: TextStyle(
+                            color: isChecked? HexColor(primaryColor) : HexColor(hint),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Poppins",
+                            fontStyle:  FontStyle.normal,
+                            fontSize: 12.0.sp
+                        ),
+                        textAlign: TextAlign.left
+                    ),
+
+                    const Spacer(),
+
                     TextButton(
-                        onPressed: () {navigateTo(context, 'ForgotPasswordScreenRoute');},
-                        style: const ButtonStyle(overlayColor: MaterialStatePropertyAll(Colors.transparent)),
+                        onPressed: () {
+                          navigateTo(context, 'ForgotPasswordScreenRoute');
+                          },
+                        style: const ButtonStyle(
+                            overlayColor: MaterialStatePropertyAll(Colors.white)
+                        ),
                         child: Text("Forgot password?",
                             style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12.sp,
-                                color: HexColor(primaryColor),
-                            )
+                              color: HexColor(primaryColor),
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Poppins",
+                                fontStyle:  FontStyle.normal,
+                                fontSize: 12.0.sp
+                            ),
+                            textAlign: TextAlign.left
                         ),
                     ),
                   ],
@@ -133,7 +142,6 @@ class LoginScreen extends StatelessWidget {
                     label: 'Login',
                     function: (){
                       if(_formKey.currentState!.validate()){
-
                       }
                     },
                     width: double.infinity
@@ -144,12 +152,15 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don’t have an account?", style: TextStyle(
-                       fontSize: 12.sp,
-                        fontWeight: FontWeight.w300,
-                        color: HexColor(dark)
-                    ),
-                      textAlign: TextAlign.left,
+                    Text("Don’t have an account?",
+                      style: TextStyle(
+                        color: HexColor(dark),
+                          fontWeight: FontWeight.w300,
+                          fontFamily: "Poppins",
+                          fontStyle:  FontStyle.normal,
+                          fontSize: 12.0.sp
+                      ),
+                    textAlign: TextAlign.left
                     ),
 
                     TextButton(
@@ -157,14 +168,17 @@ class LoginScreen extends StatelessWidget {
                         navigateTo(context, CreateAccountScreen.routeName);
                       },
                       style: const ButtonStyle(
-                          overlayColor: MaterialStatePropertyAll(Colors.transparent)),
+                          overlayColor: MaterialStatePropertyAll(Colors.white)),
                       child: Text("Create account",
                           style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.sp,
                             color: HexColor(primaryColor),
-                          )
-                      ),
+                              fontWeight: FontWeight.w500,
+                              fontFamily: "Poppins",
+                              fontStyle:  FontStyle.normal,
+                              fontSize: 12.0
+                          ),
+                          textAlign: TextAlign.left
+                      )
                     ),
                   ],
                 ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -30,29 +31,57 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(MediaQuery.of(context).size.height/10),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 58, left: 19),
+            child:
+
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+
+                children: [InkWell(
+                  onTap: () {
+                    navigateTo(context, LoginScreen.routeName);
+                  },
+
+                  child: setPhoto(
+                      kind: 1,
+                      path: 'assets/icons/arrow-left.svg',
+                      height: 24,
+                      width: 24),
+                ),]
+            ),)
+
+
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0).w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 10),
             Text(
               "Forgot password",
               style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20.sp,
-                  color: HexColor(dark)),
+                color: HexColor(dark),
+                fontStyle: FontStyle.normal,
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w600,
+                fontSize: 20.sp,
+              ),
               textAlign: TextAlign.left,
             ),
             Text(
                 "Select an option to send verification code to reset your password.",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
+                    fontFamily: "Poppins",
+                    fontStyle: FontStyle.normal,
                     fontSize: 14.sp,
                     color: HexColor(dark))),
             SizedBox(height: MediaQuery.of(context).size.height / 20),
             Container(
-              width: 320.w,
+              width: 350.w,
               height: 107.h,
               decoration: ShapeDecoration(
                 color: Colors.white,
@@ -71,7 +100,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(15.0),
                         child: Container(
                           width: 45.w,
                           height: 45.h,
@@ -97,6 +126,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         Text("Reset via SMS",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
+                                fontFamily: "Poppins",
+                                fontStyle: FontStyle.normal,
                                 fontSize: 14.sp,
                                 color: clicked1
                                     ? HexColor(primaryColor)
@@ -105,11 +136,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         Text("Verification code will be send",
                             style: TextStyle(
                                 fontWeight: FontWeight.w300,
+                                fontFamily: "Poppins",
+                                fontStyle: FontStyle.normal,
                                 fontSize: 12.sp,
                                 color: HexColor(darkGray))),
-                        Text("to your phone number.",
+                        Text("to 012******05.",
                             style: TextStyle(
                                 fontWeight: FontWeight.w300,
+                                fontFamily: "Poppins",
+                                fontStyle: FontStyle.normal,
                                 fontSize: 12.sp,
                                 color: HexColor(darkGray))),
                       ],
@@ -118,7 +153,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const Spacer(),
                   Radio<String>(
                     value: 'Option 1',
-                    fillColor: MaterialStatePropertyAll(HexColor(primaryColor)),
+                    activeColor: HexColor(primaryColor),
                     groupValue: selectedValue,
                     onChanged: (value) {
                       setState(() {
@@ -133,7 +168,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 40),
             Container(
-              width: 320.w,
+              width: 350.w,
               height: 107.h,
               decoration: ShapeDecoration(
                 color: Colors.white,
@@ -152,7 +187,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(15.0),
                         child: Container(
                           width: 45.w,
                           height: 45.h,
@@ -178,6 +213,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         Text("Reset via Email",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
+                                fontFamily: "Poppins",
+                                fontStyle: FontStyle.normal,
                                 fontSize: 14.sp,
                                 color: clicked2
                                     ? HexColor(primaryColor)
@@ -186,11 +223,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         Text("Verification code will be send",
                             style: TextStyle(
                                 fontWeight: FontWeight.w300,
+                                fontFamily: "Poppins",
+                                fontStyle: FontStyle.normal,
                                 fontSize: 12.sp,
                                 color: HexColor(darkGray))),
-                        Text("to your email address.",
+                        Text("to ma******@gmail.com.",
                             style: TextStyle(
                                 fontWeight: FontWeight.w300,
+                                fontFamily: "Poppins",
+                                fontStyle: FontStyle.normal,
                                 fontSize: 12.sp,
                                 color: HexColor(darkGray))),
                       ],
@@ -199,7 +240,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const Spacer(),
                   Radio<String>(
                     value: 'Option 2',
-                    fillColor: MaterialStatePropertyAll(HexColor(primaryColor)),
+                    activeColor: HexColor(primaryColor),
                     groupValue: selectedValue,
                     onChanged: (value) {
                       setState(() {
@@ -222,18 +263,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     navigateTo(context, 'ResetViaEmailScreenRoute');
 
                   } else {
-                    print("no one");
+                    if (kDebugMode) {
+                      print("no one");
+                    }
                   }
                 },
                 width: double.infinity),
-            SizedBox(height: MediaQuery.of(context).size.height / 20),
-            Center(
-              child: commonTextBtn(
-                  label: "Back",
-                  function: () {
-                    navigateTo(context, LoginScreen.routeName);
-                  }),
-            )
           ],
         ),
       ),

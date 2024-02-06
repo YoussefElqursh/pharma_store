@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:pharma_store/module/3-onboarding_module/onboarding_screen.dart';
 import 'package:pharma_store/shared/components/functions.dart';
 
 import '../../shared/styles/colors.dart';
@@ -37,8 +38,11 @@ class ChooseLanguageScreen extends StatelessWidget {
                 'Pharma',
                 style: TextStyle(
                     fontSize: 22.sp,
+                    fontFamily: "Poppins",
                     fontWeight: FontWeight.w700,
-                    color: HexColor(dark)),
+                    color: HexColor(dark),
+                    fontStyle: FontStyle.normal,
+                ),
                 textAlign: TextAlign.center,
               ),
 
@@ -46,8 +50,11 @@ class ChooseLanguageScreen extends StatelessWidget {
                 'Store',
                 style: TextStyle(
                     fontSize: 22.sp,
+                    fontFamily: "Poppins",
                     fontWeight: FontWeight.w700,
-                    color: HexColor(dark)),
+                    color: HexColor(dark),
+                    fontStyle: FontStyle.normal,
+                ),
                 textAlign: TextAlign.center,
               ),
 
@@ -55,7 +62,9 @@ class ChooseLanguageScreen extends StatelessWidget {
 
               Text('قم باختيار لغتك المفضلة',style: TextStyle(
                   fontSize: 18.sp,
+                  fontFamily: "Cairo",
                   fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal,
                   color: HexColor(black)),
                 textAlign: TextAlign.center,
               ),
@@ -64,8 +73,10 @@ class ChooseLanguageScreen extends StatelessWidget {
 
               Text('Choose your default language ',style: TextStyle(
                   fontSize: 14.sp,
+                  fontFamily: "Poppins",
                   fontWeight: FontWeight.w500,
-                  color: HexColor(darkGray)),
+                  fontStyle: FontStyle.normal,
+                  color: HexColor(dark)),
                 textAlign: TextAlign.center,
               ),
 
@@ -86,7 +97,7 @@ class ChooseLanguageScreen extends StatelessWidget {
                       ),
                     ),
                     child: MaterialButton(
-                      onPressed: () { navigateTo(context, "OnBoardingRoute"); },
+                      onPressed: () { navigateToWithoutBack(context, const OnBoardingScreen()); },
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -95,6 +106,8 @@ class ChooseLanguageScreen extends StatelessWidget {
                             SizedBox(height: 12.h),
                              Text('ُEnglish',
                                 style: TextStyle(
+                                  fontFamily: "Poppins",
+                                  fontStyle: FontStyle.normal,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14.sp,
                                 ),
@@ -120,7 +133,7 @@ class ChooseLanguageScreen extends StatelessWidget {
                       ),
                     ),
                     child: MaterialButton(
-                      onPressed: () { navigateTo(context, "OnBoardingRoute"); },
+                      onPressed: () { navigateToWithoutBack(context, const OnBoardingScreen()); },
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -129,8 +142,10 @@ class ChooseLanguageScreen extends StatelessWidget {
                             SizedBox(height: 12.h),
                              Text('العربية',
                               style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp,
+                                fontFamily: "Cairo",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp,
                             ),
                               textAlign: TextAlign.center,)
                           ],

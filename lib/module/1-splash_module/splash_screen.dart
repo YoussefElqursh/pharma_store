@@ -42,8 +42,11 @@ class SplashScreen extends StatelessWidget {
                   'Pharma',
                   style: TextStyle(
                       fontSize: 22.sp,
+                      fontFamily: "Poppins",
                       fontWeight: FontWeight.w700,
-                      color: HexColor(dark)),
+                      color: HexColor(dark),
+                      fontStyle: FontStyle.normal,
+                  ),
                   textAlign: TextAlign.center,
                 ),
 
@@ -51,8 +54,11 @@ class SplashScreen extends StatelessWidget {
                   'Store',
                   style: TextStyle(
                       fontSize: 22.sp,
+                      fontFamily: "Poppins",
                       fontWeight: FontWeight.w700,
-                      color: HexColor(dark)),
+                      color: HexColor(dark),
+                      fontStyle: FontStyle.normal,
+                  ),
                   textAlign: TextAlign.center,
                 ),
 

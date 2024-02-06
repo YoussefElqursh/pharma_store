@@ -25,9 +25,10 @@ Widget commonMaterialBtn({@required String? label, @required function, @required
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16.sp,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w500,
+              fontFamily: "Poppins",
+              fontStyle:  FontStyle.normal,
+              fontSize: 16.0.sp
           ),
         ),
       ),
@@ -78,12 +79,14 @@ Widget commonInputField({
     validator: validator,
     decoration: InputDecoration(
       labelText: label!,
-      labelStyle: TextStyle(color: HexColor(placeholder)),
+      labelStyle: TextStyle(
+          color: HexColor(hint),
+          fontWeight: FontWeight.w400,
+          fontFamily: "Poppins",
+          fontStyle:  FontStyle.normal,
+          fontSize: 14.0),
       border: const OutlineInputBorder(),
-      contentPadding: EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: HexColor(primaryColor), width: 2.0.w),
-      ),
+      contentPadding: EdgeInsets.symmetric(vertical: 12.0.h, horizontal: 12.0.w),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: HexColor(placeholder), width: 1.0.w),
       ),
