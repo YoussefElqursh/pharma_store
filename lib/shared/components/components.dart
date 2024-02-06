@@ -3,15 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 import '../styles/colors.dart';
-
+import 'functions.dart';
 
 //this is widget use to make stander MaterialBtn in app
-Widget commonMaterialBtn({@required String? label, @required function, @required width}) =>
+Widget commonMaterialBtn(
+        {@required String? label, @required function, @required width}) =>
     Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          color: HexColor(primaryColor)
-      ),
+          color: HexColor(primaryColor)),
       child: MaterialButton(
         onPressed: function,
         height: 52.h,
@@ -25,18 +25,16 @@ Widget commonMaterialBtn({@required String? label, @required function, @required
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-              fontWeight: FontWeight.w500,
-              fontFamily: "Poppins",
-              fontStyle:  FontStyle.normal,
-              fontSize: 16.0.sp
+            fontSize: 16.sp,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
     );
 
 //this is widget use to make stander TextBtn in app
-Widget commonTextBtn({@required String? label, @required function}) =>
-    InkWell(
+Widget commonTextBtn({@required String? label, @required function}) => InkWell(
       overlayColor: const MaterialStatePropertyAll(Colors.transparent),
       onTap: function,
       child: Container(
@@ -71,29 +69,132 @@ Widget commonInputField({
   String? label,
   String? Function(String?)? validator,
   VoidCallback? function2,
-}) => TextFormField(
+}) =>
+    TextFormField(
 
-    controller: controller,
-    keyboardType: textType,
-    obscureText: isPassword,
-    validator: validator,
-    decoration: InputDecoration(
-      labelText: label!,
-      labelStyle: TextStyle(
-          color: HexColor(hint),
-          fontWeight: FontWeight.w400,
-          fontFamily: "Poppins",
-          fontStyle:  FontStyle.normal,
-          fontSize: 14.0),
-      border: const OutlineInputBorder(),
-      contentPadding: EdgeInsets.symmetric(vertical: 12.0.h, horizontal: 12.0.w),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: HexColor(placeholder), width: 1.0.w),
+
+      controller: controller,
+      keyboardType: textType,
+      obscureText: isPassword,
+      validator: validator,
+      decoration: InputDecoration(
+
+        labelText: label!,
+        labelStyle: TextStyle(color: HexColor(placeholder)),
+        border: const OutlineInputBorder(),
+        contentPadding:
+            EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: HexColor(primaryColor), width: 2.0.w),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: HexColor(placeholder), width: 1.0.w),
+        ),
+        prefixIcon: prefixIcon,
+        suffixIcon: IconButton(
+          onPressed: function2,
+          icon: Icon(suffixIcon, color: HexColor(placeholder)),
+        ),
       ),
-      prefixIcon: prefixIcon,
-      suffixIcon: IconButton(
-        onPressed: function2,
-        icon: Icon(suffixIcon, color: HexColor(placeholder)),
+    );
+
+
+Widget commonMaterialBtnWithIconOnLeft(
+    {
+      @required String? label,
+      @required width,
+      required String pth,
+      required String txtBtnColor,
+      required function3,
+      required String containerColor,
+      required String borderColor
+
+
+    }) =>
+    InkWell(
+      onTap: function3,
+      child: Container(
+        alignment: Alignment.center,
+        width:width ,
+        height: 48.w,
+        decoration:BoxDecoration(
+
+            color: HexColor(containerColor),
+            border:Border.all(color: HexColor(borderColor)) ,
+            borderRadius:BorderRadius.circular(4)
+        ),
+        child: Row(
+
+          mainAxisSize: MainAxisSize.min, // Ensure tight layout
+          children: [
+            setPhoto(kind: 1, path: pth, height: 10.67, width: 16),
+            SizedBox(width: 8), // Optional spacing between text and icon
+
+            Text(
+              label!,
+              style: TextStyle(color: HexColor(txtBtnColor)),
+            ),
+
+          ],
+        ),
       ),
-    ),
-  );
+    );
+
+Widget commonMaterialBtnWithIconRight(
+    {
+      @required String? label,
+      @required width,
+      required String pth,
+      required String txtBtnColor,
+      required function3,
+      required String containerColor,
+      required String borderColor,
+      required bool hasIcon
+
+
+    }) =>
+    InkWell(
+      onTap: function3,
+      child: Container(
+        alignment: Alignment.center,
+        height: 48.w,
+        width:width ,
+        decoration:BoxDecoration(
+
+            color: HexColor(containerColor),
+            border:Border.all(color: HexColor(borderColor)) ,
+            borderRadius:BorderRadius.circular(4)
+        ),
+        child: (hasIcon)?  Row(
+
+          mainAxisSize: MainAxisSize.min, // Ensure tight layout
+          children: [
+
+
+            Text(
+              label!,
+              style: TextStyle(color: HexColor(txtBtnColor)),
+            ),
+            SizedBox(width: 8), // Optional spacing between text and icon
+
+            setPhoto(kind: 1, path: pth, height: 10.67, width: 16),
+
+          ],
+        ):Row(
+
+          mainAxisSize: MainAxisSize.min, // Ensure tight layout
+          children: [
+
+
+            Text(
+              label!,
+              style: TextStyle(color: HexColor(txtBtnColor)),
+            ),
+
+          ],
+        )
+      ),
+    );
+
+
+
