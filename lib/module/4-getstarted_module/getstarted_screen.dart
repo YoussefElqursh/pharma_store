@@ -5,6 +5,7 @@ import '../../shared/components/components.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/components/strings.dart';
 import '../../shared/styles/colors.dart';
+import '../7-create_account_module/create_account_screen.dart';
 
 class GetStartedScreen extends StatelessWidget {
   static const String routeName = 'GetStartedRoute';
@@ -69,7 +70,7 @@ class GetStartedScreen extends StatelessWidget {
                   ),
                 ),
                 child: MaterialButton(
-                  onPressed: () {  },
+                  onPressed: () { navigateTo(context, CreateAccountScreen.routeName); },
                   height: 52.h,
                   minWidth: double.infinity,
                   elevation: 0,
