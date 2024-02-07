@@ -35,7 +35,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   final _lastnameController = TextEditingController();
   final _phonenumberController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  //final _formKey = GlobalKey<FormState>();
   int _current_step = 0;
 
   @override
@@ -77,7 +77,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                         color: HexColor(dark)),
                     textAlign: TextAlign.left,
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 200),
+                  SizedBox(height: MediaQuery.of(context).size.height / 220),
                   Text("We are happy to have you join us.",
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
@@ -87,11 +87,11 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 ],
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 21.417),
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
             SingleChildScrollView(
               child: Stepper(
                 connectorThickness: 0,
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 currentStep: _current_step,
                 steps: getSteps(),
                 controlsBuilder: (context, _){
@@ -187,7 +187,6 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                     )),
               ],
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 19.923),
           ]),
         ),
       ),
@@ -429,8 +428,8 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 2.0, right: 8.0),
+                const Padding(
+                  padding: EdgeInsets.only(top: 2.0, right: 8.0),
                   child: CustomCheckbox(),
                 ),
                 privacyPolicyLinkAndTermsOfService()
@@ -452,14 +451,14 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Form Submitted"),
-              content: Text("Your form has been submitted successfuly"),
+              title: const Text("Form Submitted"),
+              content: const Text("Your form has been submitted successfuly"),
               actions: [
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text("OK"))
+                    child: const Text("OK"))
               ],
             );
           });

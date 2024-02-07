@@ -6,8 +6,7 @@ import '../styles/colors.dart';
 import 'functions.dart';
 
 //this is widget use to make stander MaterialBtn in app
-Widget commonMaterialBtn(
-        {@required String? label, @required function, @required width}) =>
+Widget commonMaterialBtn({@required String? label, @required function, @required width}) =>
     Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
@@ -71,8 +70,6 @@ Widget commonInputField({
   VoidCallback? function2,
 }) =>
     TextFormField(
-
-
       controller: controller,
       keyboardType: textType,
       obscureText: isPassword,
@@ -80,13 +77,10 @@ Widget commonInputField({
       decoration: InputDecoration(
 
         labelText: label!,
-        labelStyle: TextStyle(color: HexColor(placeholder)),
+        labelStyle: TextStyle(color: HexColor(hint)),
         border: const OutlineInputBorder(),
         contentPadding:
             EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: HexColor(primaryColor), width: 2.0.w),
-        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: HexColor(placeholder), width: 1.0.w),
         ),
@@ -128,7 +122,7 @@ Widget commonMaterialBtnWithIconOnLeft(
           mainAxisSize: MainAxisSize.min, // Ensure tight layout
           children: [
             setPhoto(kind: 1, path: pth, height: 10.67, width: 16),
-            SizedBox(width: 8), // Optional spacing between text and icon
+            const SizedBox(width: 8), // Optional spacing between text and icon
 
             Text(
               label!,
@@ -175,7 +169,7 @@ Widget commonMaterialBtnWithIconRight(
               label!,
               style: TextStyle(color: HexColor(txtBtnColor)),
             ),
-            SizedBox(width: 8), // Optional spacing between text and icon
+            const SizedBox(width: 8), // Optional spacing between text and icon
 
             setPhoto(kind: 1, path: pth, height: 10.67, width: 16),
 

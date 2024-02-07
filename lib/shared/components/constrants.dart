@@ -31,12 +31,12 @@ Widget privacyPolicyLinkAndTermsOfService() {
     alignment: Alignment.center,
     child: Center(
         child: Text.rich(TextSpan(
-            text: 'By creating account, you agree to our ',
+            text: 'By creating account, you agree to\nour ',
             style: TextStyle(fontSize: 12.sp,fontWeight: FontWeight.w400,
                 fontFamily: "Poppins", color: Colors.black),
             children: <TextSpan>[
           TextSpan(
-              text: 'Terms of\nService',
+              text: 'Terms of Service',
               style: TextStyle(
                   fontSize: 12.sp,
                   color: HexColor(primaryColor),
