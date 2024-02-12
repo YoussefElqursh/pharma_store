@@ -9,7 +9,7 @@ import '../../shared/styles/colors.dart';
 import '../../shared/styles/custom_checkbox.dart';
 
 class CreateAccountScreen extends StatefulWidget {
-   static const String routeName = 'CreateAccountScreenRoute';
+  static const String routeName = 'CreateAccountScreenRoute';
   const CreateAccountScreen({super.key});
   static Route route() {
     return MaterialPageRoute(
@@ -61,11 +61,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
             ]),
           )),
       body: SingleChildScrollView(
-        child: Expanded(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 15),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 15),
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -87,65 +86,19 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 ],
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 35),
-            SingleChildScrollView(
-              child: Stepper(
-                connectorThickness: 0,
-                margin: const EdgeInsets.all(20),
-                currentStep: _current_step,
-                steps: getSteps(),
-                controlsBuilder: (context, _){
-                  if (_current_step == 0)
-                { return Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                            SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width / 13.09),
-                            commonMaterialBtnWithIconRight(
-                                width: MediaQuery.of(context).size.width / 2.44,
-                                label: 'Next',
-                                pth: 'assets/icons/arrow-right.svg',
-                                txtBtnColor: white100,
-                                function3: () => onStepContinue(),
-                                containerColor: primaryColor,
-                                borderColor: primaryColor, hasIcon: true)
-                          ]);
-                }else if (_current_step == 3){ return
-
-                    Row(mainAxisSize: MainAxisSize.max, children: [
-                        commonMaterialBtnWithIconOnLeft(
-                            containerColor: white100,
-                            width: MediaQuery.of(context).size.width / 2.44,
-                            label: 'Previous',
-                            pth: 'assets/icons/back_arrow.svg',
-                            txtBtnColor: primaryColor,
-                            function3: () => onStepCancel(),
-                            borderColor: primaryColor),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width / 13.09),
-                        commonMaterialBtnWithIconRight(
-                            width: MediaQuery.of(context).size.width / 2.44,
-                            label: 'Done',
-                            pth: 'assets/icons/arrow-right.svg',
-                            txtBtnColor: white100,
-                            function3: () => onStepContinue(),
-                            containerColor: primaryColor,
-                            borderColor: primaryColor, hasIcon: false)
-                      ]);
-                  }
-                  else{
-                    return
-                    Row(mainAxisSize: MainAxisSize.max, children: [
-                      commonMaterialBtnWithIconOnLeft(
-                          containerColor: white100,
-                          width: MediaQuery.of(context).size.width / 2.44,
-                          label: 'Previous',
-                          pth: 'assets/icons/back_arrow.svg',
-                          txtBtnColor: primaryColor,
-                          function3: () => onStepCancel(),
-                          borderColor: primaryColor),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height / 35),
+          Stepper(
+            connectorThickness: 0,
+            margin: const EdgeInsets.all(20),
+            currentStep: _current_step,
+            steps: getSteps(),
+            controlsBuilder: (context, _) {
+              if (_current_step == 0) {
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
                       SizedBox(
                           width: MediaQuery.of(context).size.width / 13.09),
                       commonMaterialBtnWithIconRight(
@@ -155,40 +108,81 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                           txtBtnColor: white100,
                           function3: () => onStepContinue(),
                           containerColor: primaryColor,
-                          borderColor: primaryColor, hasIcon: true)
+                          borderColor: primaryColor,
+                          hasIcon: true)
                     ]);
-
-                  }
-              },
-                onStepTapped: (step) => setState(() {
-                  _current_step = step;
-                }),
+              } else if (_current_step == 3) {
+                return Row(mainAxisSize: MainAxisSize.max, children: [
+                  commonMaterialBtnWithIconOnLeft(
+                      containerColor: white100,
+                      width: MediaQuery.of(context).size.width / 2.44,
+                      label: 'Previous',
+                      pth: 'assets/icons/back_arrow.svg',
+                      txtBtnColor: primaryColor,
+                      function3: () => onStepCancel(),
+                      borderColor: primaryColor),
+                  SizedBox(width: MediaQuery.of(context).size.width / 13.09),
+                  commonMaterialBtnWithIconRight(
+                      width: MediaQuery.of(context).size.width / 2.44,
+                      label: 'Done',
+                      pth: 'assets/icons/arrow-right.svg',
+                      txtBtnColor: white100,
+                      function3: () => onStepContinue(),
+                      containerColor: primaryColor,
+                      borderColor: primaryColor,
+                      hasIcon: false)
+                ]);
+              } else {
+                return Row(mainAxisSize: MainAxisSize.max, children: [
+                  commonMaterialBtnWithIconOnLeft(
+                      containerColor: white100,
+                      width: MediaQuery.of(context).size.width / 2.44,
+                      label: 'Previous',
+                      pth: 'assets/icons/back_arrow.svg',
+                      txtBtnColor: primaryColor,
+                      function3: () => onStepCancel(),
+                      borderColor: primaryColor),
+                  SizedBox(width: MediaQuery.of(context).size.width / 13.09),
+                  commonMaterialBtnWithIconRight(
+                      width: MediaQuery.of(context).size.width / 2.44,
+                      label: 'Next',
+                      pth: 'assets/icons/arrow-right.svg',
+                      txtBtnColor: white100,
+                      function3: () => onStepContinue(),
+                      containerColor: primaryColor,
+                      borderColor: primaryColor,
+                      hasIcon: true)
+                ]);
+              }
+            },
+            onStepTapped: (step) => setState(() {
+              _current_step = step;
+            }),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Already have an account?",
+                style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: "Poppins"),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Already have an account?",
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w300,
-                      fontFamily: "Poppins"),
-                ),
-                TextButton(
-                    onPressed: () { navigateTo(context,  LoginScreen.routeName);
-                    },
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500),
-                    )),
-              ],
-            ),
-          ]),
-        ),
+              TextButton(
+                  onPressed: () {
+                    navigateTo(context, LoginScreen.routeName);
+                  },
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500),
+                  )),
+            ],
+          ),
+        ]),
       ),
     );
   }
@@ -216,7 +210,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           children: [
             commonInputField(
                 label: 'Name*',
-                textType: TextInputType.phone,
+                textType: TextInputType.text,
                 controller: _nameController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -226,8 +220,16 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
+                function2: () {},
+                isCustomIcon: false,
+                suffixIconData: Icons.arrow_drop_down,
+                suffixIconCol: dark,
+                IconContainerHight: 42,
+                IconContainerWidth:42 ,
+
+
                 label: 'Country*',
-                textType: TextInputType.phone,
+                textType: TextInputType.text,
                 controller: _countryController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -237,8 +239,14 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
+                IconContainerHight: 42,
+                IconContainerWidth:42 ,
+                function2: () {},
+                isCustomIcon: false,
+                suffixIconData: Icons.arrow_drop_down,
+                suffixIconCol: dark,
                 label: 'Government*',
-                textType: TextInputType.phone,
+                textType: TextInputType.text,
                 controller: _governmentController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -248,8 +256,14 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
+                IconContainerHight: 42,
+                IconContainerWidth:42 ,
+                function2: () {},
+                isCustomIcon: false,
+                suffixIconData: Icons.arrow_drop_down,
+                suffixIconCol: dark,
                 label: 'Region*',
-                textType: TextInputType.phone,
+                textType: TextInputType.text,
                 controller: _regionController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -259,8 +273,9 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
+
                 label: 'Address*',
-                textType: TextInputType.phone,
+                textType: TextInputType.streetAddress,
                 controller: _addressController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -270,6 +285,13 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
+                function2: () {
+                  print("object");
+                },
+                containerColor: primaryColor,
+                containerWithColor: true,
+                isCustomIcon: true,
+                suffixPth: "assets/icons/icon_add.svg",
                 label: 'Contact number*',
                 textType: TextInputType.phone,
                 controller: _contactnumberController,
@@ -301,6 +323,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonInputField(
+                containerColor: primaryColor,
+                containerWithColor: true,
+                isCustomIcon: true,
+                suffixPth: "assets/icons/Button-label.svg",
                 label: 'License number',
                 textType: TextInputType.phone,
                 controller: _licensenumberController,
@@ -312,8 +338,12 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
+                containerColor: primaryColor,
+                containerWithColor: true,
+                isCustomIcon: true,
+                suffixPth: "assets/icons/Button-label.svg",
                 label: 'Commercial register',
-                textType: TextInputType.phone,
+                textType: TextInputType.text,
                 controller: _commercialController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -348,7 +378,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           children: [
             commonInputField(
                 label: 'First name*',
-                textType: TextInputType.phone,
+                textType: TextInputType.text,
                 controller: _firstnameController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -359,7 +389,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
                 label: 'Last name*',
-                textType: TextInputType.phone,
+                textType: TextInputType.text,
                 controller: _lastnameController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -370,7 +400,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
                 label: 'Email',
-                textType: TextInputType.phone,
+                textType: TextInputType.emailAddress,
                 controller: _phonenumberController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -415,8 +445,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonInputField(
+                isPassword: true,
+                suffixIconData: Icons.visibility_off_outlined,
                 label: 'Password*',
-                textType: TextInputType.phone,
+                textType: TextInputType.visiblePassword,
                 controller: _passwordController,
                 validator: (value) {
                   if (value!.isEmpty) {
