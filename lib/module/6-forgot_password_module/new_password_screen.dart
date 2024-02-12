@@ -75,7 +75,7 @@ class _ResetViaEmailScreenState extends State<NewPasswordScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height / 21.147),
                 commonInputField(
                     isPassword: true,
-                    suffixIcon: Icons.visibility_off_outlined,
+                    suffixIconData: Icons.visibility_off_outlined,
                     label: 'New password*',
                     textType: TextInputType.visiblePassword,
                     controller: _passController1,

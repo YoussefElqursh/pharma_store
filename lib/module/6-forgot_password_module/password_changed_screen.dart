@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pharma_store/module/6-forgot_password_module/verify_phone_number_screen.dart';
-
 import '../../shared/components/components.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
 import '../5-login_module/login_screen.dart';
-import 'forgot_password_screen.dart';
 
 class PasswordChangedScreen extends StatefulWidget {
   static const String routeName = 'PasswordChangedScreenRoute';

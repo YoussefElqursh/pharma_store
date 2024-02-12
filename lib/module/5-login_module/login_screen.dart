@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textType: TextInputType.visiblePassword,
                     controller: _passwordController,
                     isPassword: true,
-                    suffixIcon: Icons.visibility_off_outlined,
+                    suffixIconData: Icons.visibility_off_outlined,
                     validator: (value) {
                       if (value!.isEmpty) {
                       return 'please, Enter Password';
