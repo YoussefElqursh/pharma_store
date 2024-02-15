@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -34,9 +35,27 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _phonenumberController = TextEditingController();
-
   //final _formKey = GlobalKey<FormState>();
   int _current_step = 0;
+  CountryListDataModel? _countryChoose;
+  List<CountryListDataModel> countryDataList = [
+    CountryListDataModel("Egypt", "assets/icons/Password-field.svg"),
+    CountryListDataModel("Tunisia", "assets/icons/TN.svg"),
+  ];
+  @override
+  void initState() {
+    super.initState();
+    _countryChoose = null;
+  }
+
+  void _onDropDownItemSelected(CountryListDataModel newSelectedBank) {
+    setState(() {
+
+      _countryChoose != newSelectedBank
+          ? _countryChoose = newSelectedBank
+          : _countryChoose = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,55 +119,59 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(
-                          width: MediaQuery.of(context).size.width / 13.09),
-                      commonMaterialBtnWithIconRight(
+                          width: MediaQuery.of(context).size.width / 15.09),
+                      commonMaterialBtn(
                           width: MediaQuery.of(context).size.width / 2.44,
                           label: 'Next',
-                          pth: 'assets/icons/arrow-right.svg',
+                          photoPath: 'assets/icons/arrow-right.svg',
                           txtBtnColor: white100,
-                          function3: () => onStepContinue(),
+                          function: () => onStepContinue(),
                           containerColor: primaryColor,
                           borderColor: primaryColor,
                           hasIcon: true)
                     ]);
               } else if (_current_step == 3) {
                 return Row(mainAxisSize: MainAxisSize.max, children: [
-                  commonMaterialBtnWithIconOnLeft(
+                  commonMaterialBtn(
+                      hasIcon: true,
+                      swapIcon: true,
                       containerColor: white100,
                       width: MediaQuery.of(context).size.width / 2.44,
                       label: 'Previous',
-                      pth: 'assets/icons/back_arrow.svg',
+                      photoPath: 'assets/icons/back_arrow.svg',
                       txtBtnColor: primaryColor,
-                      function3: () => onStepCancel(),
+                      function: () => onStepCancel(),
                       borderColor: primaryColor),
-                  SizedBox(width: MediaQuery.of(context).size.width / 13.09),
-                  commonMaterialBtnWithIconRight(
+                  SizedBox(width: MediaQuery.of(context).size.width / 15.09),
+                  commonMaterialBtn(
                       width: MediaQuery.of(context).size.width / 2.44,
                       label: 'Done',
-                      pth: 'assets/icons/arrow-right.svg',
+                      photoPath: 'assets/icons/arrow-right.svg',
                       txtBtnColor: white100,
-                      function3: () => onStepContinue(),
+                      function: () => onStepContinue(),
                       containerColor: primaryColor,
                       borderColor: primaryColor,
                       hasIcon: false)
                 ]);
               } else {
                 return Row(mainAxisSize: MainAxisSize.max, children: [
-                  commonMaterialBtnWithIconOnLeft(
+                  commonMaterialBtn(
+                      hasIcon: true,
+                      swapIcon: true,
                       containerColor: white100,
                       width: MediaQuery.of(context).size.width / 2.44,
                       label: 'Previous',
-                      pth: 'assets/icons/back_arrow.svg',
+                      photoPath: 'assets/icons/back_arrow.svg',
                       txtBtnColor: primaryColor,
-                      function3: () => onStepCancel(),
+                      function: () => onStepCancel(),
                       borderColor: primaryColor),
-                  SizedBox(width: MediaQuery.of(context).size.width / 13.09),
-                  commonMaterialBtnWithIconRight(
+                  SizedBox(width: MediaQuery.of(context).size.width / 15.09),
+                  commonMaterialBtn(
                       width: MediaQuery.of(context).size.width / 2.44,
                       label: 'Next',
-                      pth: 'assets/icons/arrow-right.svg',
+                      photoPath: 'assets/icons/arrow-right.svg',
                       txtBtnColor: white100,
-                      function3: () => onStepContinue(),
+                      function: () => onStepContinue(),
                       containerColor: primaryColor,
                       borderColor: primaryColor,
                       hasIcon: true)
@@ -206,6 +229,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               fontWeight: FontWeight.w500),
         ),
         content: Column(
+          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonInputField(
@@ -219,61 +243,259 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                   return null;
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                function2: () {},
-                isCustomIcon: false,
-                suffixIconData: Icons.arrow_drop_down,
-                suffixIconCol: dark,
-                IconContainerHight: 42,
-                IconContainerWidth:42 ,
+            SizedBox(
+              height: 61.2,
+              child: DropdownButtonFormField2<CountryListDataModel>(
+                decoration: InputDecoration(
+                  labelText: "Country*",
+                  labelStyle: TextStyle(
+                      color:_countryChoose != null?HexColor(primaryColor):HexColor(hint),
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14),
+                  contentPadding: EdgeInsets.symmetric(
+                      vertical: 15.0.h, horizontal: 15.0.w),
+                  enabledBorder: _countryChoose != null
+                      ? OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide(
+                              color: HexColor(primaryColor),
+                              width: 1.0), // Change the color as desired
+                        )
+                      : OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: BorderSide(
+                              color: HexColor(placeholder),
+                              width: 1.0), // Change the color as desired
+                        ),
+                  focusedBorder: OutlineInputBorder(
+
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+
+                        color: HexColor(primaryColor),
+                        width: 1.0), // Change the color as desired
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  // Add more decoration..
+                ),
+                iconStyleData: IconStyleData(
+                    openMenuIcon: const Icon(Icons.arrow_drop_up),
+                    iconEnabledColor: HexColor(dark),
+                    iconDisabledColor: HexColor(dark)),
+                dropdownStyleData: DropdownStyleData(
+                    decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                )),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: HexColor(dark),
+                  fontFamily: "Poppins",
+                ),
+                items: countryDataList
+                    .map<DropdownMenuItem<CountryListDataModel>>(
+                        (CountryListDataModel value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        setPhoto(
+                          kind: 1,
+                          path: value.country_logo_path,
+                        ),
+                        // Icon(valueItem.bank_logo),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Text(value.country_name),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                isExpanded: true,
+                isDense: true,
+                value: _countryChoose,
+                onChanged: (CountryListDataModel? newSelectedCountry) {
+                  _onDropDownItemSelected(newSelectedCountry!);
+
+                },
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+            SizedBox(
+              height: 61.2,
+              child: DropdownButtonFormField2<CountryListDataModel>(
+                decoration: InputDecoration(
 
 
-                label: 'Country*',
-                textType: TextInputType.text,
-                controller: _countryController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                IconContainerHight: 42,
-                IconContainerWidth:42 ,
-                function2: () {},
-                isCustomIcon: false,
-                suffixIconData: Icons.arrow_drop_down,
-                suffixIconCol: dark,
-                label: 'Government*',
-                textType: TextInputType.text,
-                controller: _governmentController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                IconContainerHight: 42,
-                IconContainerWidth:42 ,
-                function2: () {},
-                isCustomIcon: false,
-                suffixIconData: Icons.arrow_drop_down,
-                suffixIconCol: dark,
-                label: 'Region*',
-                textType: TextInputType.text,
-                controller: _regionController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
 
+                  labelText: "Government*",
+                  labelStyle: TextStyle(
+                      color:_countryChoose != null?HexColor(primaryColor):HexColor(hint),
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14),
+                  contentPadding: EdgeInsets.symmetric(
+                      vertical: 15.0.h, horizontal: 15.0.w),
+                  enabledBorder: _countryChoose != null
+                      ? OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+                        color: HexColor(primaryColor),
+                        width: 1.0), // Change the color as desired
+                  )
+                      : OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+                        color: HexColor(placeholder),
+                        width: 1.0), // Change the color as desired
+                  ),
+                  focusedBorder: OutlineInputBorder(
+
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+
+                        color: HexColor(primaryColor),
+                        width: 1.0), // Change the color as desired
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  // Add more decoration..
+                ),
+                iconStyleData: IconStyleData(
+                    openMenuIcon: const Icon(Icons.arrow_drop_up),
+                    iconEnabledColor: HexColor(dark),
+                    iconDisabledColor: HexColor(dark)),
+                dropdownStyleData: DropdownStyleData(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                    )),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: HexColor(dark),
+                  fontFamily: "Poppins",
+                ),
+                items: countryDataList
+                    .map<DropdownMenuItem<CountryListDataModel>>(
+                        (CountryListDataModel value) {
+                      return DropdownMenuItem(
+                        value: value,
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            setPhoto(
+                              kind: 1,
+                              path: value.country_logo_path,
+                            ),
+                            // Icon(valueItem.bank_logo),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            Text(value.country_name),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                isExpanded: true,
+                isDense: true,
+                value: _countryChoose,
+                onChanged: (CountryListDataModel? newSelectedCountry) {
+                  _onDropDownItemSelected(newSelectedCountry!);
+
+                },
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+            SizedBox(
+              height: 61.2,
+              child: DropdownButtonFormField2<CountryListDataModel>(
+                decoration: InputDecoration(
+
+
+
+                  labelText: "Region*",
+                  labelStyle: TextStyle(
+                      color:_countryChoose != null?HexColor(primaryColor):HexColor(hint),
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14),
+                  contentPadding: EdgeInsets.symmetric(
+                      vertical: 15.0.h, horizontal: 15.0.w),
+                  enabledBorder: _countryChoose != null
+                      ? OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+                        color: HexColor(primaryColor),
+                        width: 1.0), // Change the color as desired
+                  )
+                      : OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+                        color: HexColor(placeholder),
+                        width: 1.0), // Change the color as desired
+                  ),
+                  focusedBorder: OutlineInputBorder(
+
+                    borderRadius: BorderRadius.circular(4.0),
+                    borderSide: BorderSide(
+
+                        color: HexColor(primaryColor),
+                        width: 1.0), // Change the color as desired
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  // Add more decoration..
+                ),
+                iconStyleData: IconStyleData(
+                    openMenuIcon: const Icon(Icons.arrow_drop_up),
+                    iconEnabledColor: HexColor(dark),
+                    iconDisabledColor: HexColor(dark)),
+                dropdownStyleData: DropdownStyleData(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                    )),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: HexColor(dark),
+                  fontFamily: "Poppins",
+                ),
+                items: countryDataList
+                    .map<DropdownMenuItem<CountryListDataModel>>(
+                        (CountryListDataModel value) {
+                      return DropdownMenuItem(
+                        value: value,
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            setPhoto(
+                              kind: 1,
+                              path: value.country_logo_path,
+                            ),
+                            // Icon(valueItem.bank_logo),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            Text(value.country_name),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                isExpanded: true,
+                isDense: true,
+                value: _countryChoose,
+                onChanged: (CountryListDataModel? newSelectedCountry) {
+                  _onDropDownItemSelected(newSelectedCountry!);
+
+                },
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+            commonInputField(
                 label: 'Address*',
                 textType: TextInputType.streetAddress,
                 controller: _addressController,
@@ -285,13 +507,12 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
-                function2: () {
+                function: () {
                   print("object");
                 },
-                containerColor: primaryColor,
-                containerWithColor: true,
                 isCustomIcon: true,
-                suffixPth: "assets/icons/icon_add.svg",
+                photoHight: MediaQuery.of(context).size.height / 16,
+                suffixIconPth: "assets/icons/Group 61.svg",
                 label: 'Contact number*',
                 textType: TextInputType.phone,
                 controller: _contactnumberController,
@@ -323,11 +544,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonInputField(
-                containerColor: primaryColor,
-                containerWithColor: true,
                 isCustomIcon: true,
-                suffixPth: "assets/icons/Button-label.svg",
+                suffixIconPth: "assets/icons/filled.svg",
                 label: 'License number',
+                photoHight: MediaQuery.of(context).size.height / 16,
                 textType: TextInputType.phone,
                 controller: _licensenumberController,
                 validator: (value) {
@@ -338,11 +558,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
-                containerColor: primaryColor,
-                containerWithColor: true,
                 isCustomIcon: true,
-                suffixPth: "assets/icons/Button-label.svg",
+                suffixIconPth: "assets/icons/filled.svg",
                 label: 'Commercial register',
+                photoHight: MediaQuery.of(context).size.height / 16,
                 textType: TextInputType.text,
                 controller: _commercialController,
                 validator: (value) {
@@ -508,4 +727,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
       });
     }
   } //to cancel and close the opened list and move the previous step
+}
+
+class CountryListDataModel {
+  String country_name;
+  String country_logo_path;
+  CountryListDataModel(this.country_name, this.country_logo_path);
 }

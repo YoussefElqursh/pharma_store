@@ -85,20 +85,7 @@ class _ResetViaEmailScreenState extends State<NewPasswordScreen> {
                       }
                       return null;
                     }),
-                SizedBox(height: MediaQuery.of(context).size.height / 42.835),
 
-                commonInputField(
-                    isPassword: true,
-                    label: 'confirm password*',
-
-                    textType: TextInputType.visiblePassword,
-                    controller: _passController2,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'please, Enter pass ';
-                      }
-                      return null;
-                    }),
                 SizedBox(height: MediaQuery.of(context).size.height / 21.147),
                 commonMaterialBtn(
                     label: 'Reset',
