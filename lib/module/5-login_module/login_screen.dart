@@ -75,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20.h),
 
                 commonInputField(
+
                     label: 'Password',
                     textType: TextInputType.visiblePassword,
                     controller: _passwordController,

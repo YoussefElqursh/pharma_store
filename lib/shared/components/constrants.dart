@@ -1,9 +1,9 @@
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pharma_store/shared/styles/colors.dart';
-
 import '../../model/onboarding_model/onboarding_model.dart';
 
 // this is lis use to make different data in OnBoarding page view.
@@ -24,6 +24,8 @@ List<OnBoardingModel> boardingList = [
       subText:
           'Your financial security is our top priority.Link bank accounts and credit cards for safe, hassle-free payments.'),
 ];
+
+
 
 Widget privacyPolicyLinkAndTermsOfService() {
   return Container(

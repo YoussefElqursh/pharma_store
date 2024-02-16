@@ -9,3 +9,4 @@ class OnBoardingModel {
     required this.subText,
   });
 }
+

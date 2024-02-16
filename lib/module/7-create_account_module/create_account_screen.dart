@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pharma_store/module/5-login_module/login_screen.dart';
+import '../../model/dropdown_model/dropdown_model.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/constrants.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
 import '../../shared/styles/custom_checkbox.dart';
+
+
 
 class CreateAccountScreen extends StatefulWidget {
   static const String routeName = 'CreateAccountScreenRoute';
@@ -34,9 +37,61 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _phonenumberController = TextEditingController();
-
   //final _formKey = GlobalKey<FormState>();
   int _current_step = 0;
+  ListDataModel? _countryChoose;
+  List<ListDataModel> countryDataList = [
+    ListDataModel(
+        infoName: 'Egypt', infoLogoPath: "assets/icons/Password-field.svg"),
+   ListDataModel(infoName: 'Tunisia', infoLogoPath: "assets/icons/TN.svg"),
+  ];
+
+  ListDataModel? _governmentChoose;
+  List<ListDataModel> governmentDataList = [
+    ListDataModel(
+        infoName: 'Alexandria'),
+    ListDataModel(infoName: 'Tanta')
+  ];
+
+  ListDataModel? _regionChoose;
+  List<ListDataModel> regionDataList = [
+    ListDataModel(
+        infoName: 'Asfra 45st'),
+    ListDataModel(infoName: 'Abo Qir'),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _countryChoose = null;
+    _governmentChoose = null;
+    _regionChoose = null;
+  }
+
+  void _onDropDownItemSelectedCountry(ListDataModel newSelectedCountry) {
+    setState(() {
+      _countryChoose != newSelectedCountry
+          ? _countryChoose = newSelectedCountry
+          : _countryChoose = null;
+    });
+  }
+
+  void _onDropDownItemSelectedGovernment(
+      ListDataModel newSelectedGovernment) {
+    setState(() {
+      _governmentChoose != newSelectedGovernment
+          ? _governmentChoose = newSelectedGovernment
+          : _governmentChoose = null;
+    });
+  }
+
+  void _onDropDownItemSelectedRegion(ListDataModel newSelectedRegion) {
+    setState(() {
+      _regionChoose != newSelectedRegion
+          ? _regionChoose = newSelectedRegion
+          : _regionChoose = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,55 +155,59 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       SizedBox(
-                          width: MediaQuery.of(context).size.width / 13.09),
-                      commonMaterialBtnWithIconRight(
+                          width: MediaQuery.of(context).size.width / 15.09),
+                      commonMaterialBtn(
                           width: MediaQuery.of(context).size.width / 2.44,
                           label: 'Next',
-                          pth: 'assets/icons/arrow-right.svg',
+                          photoPath: 'assets/icons/arrow-right.svg',
                           txtBtnColor: white100,
-                          function3: () => onStepContinue(),
+                          function: () => onStepContinue(),
                           containerColor: primaryColor,
                           borderColor: primaryColor,
                           hasIcon: true)
                     ]);
               } else if (_current_step == 3) {
                 return Row(mainAxisSize: MainAxisSize.max, children: [
-                  commonMaterialBtnWithIconOnLeft(
+                  commonMaterialBtn(
+                      hasIcon: true,
+                      swapIcon: true,
                       containerColor: white100,
                       width: MediaQuery.of(context).size.width / 2.44,
                       label: 'Previous',
-                      pth: 'assets/icons/back_arrow.svg',
+                      photoPath: 'assets/icons/back_arrow.svg',
                       txtBtnColor: primaryColor,
-                      function3: () => onStepCancel(),
+                      function: () => onStepCancel(),
                       borderColor: primaryColor),
-                  SizedBox(width: MediaQuery.of(context).size.width / 13.09),
-                  commonMaterialBtnWithIconRight(
+                  SizedBox(width: MediaQuery.of(context).size.width / 15.09),
+                  commonMaterialBtn(
                       width: MediaQuery.of(context).size.width / 2.44,
                       label: 'Done',
-                      pth: 'assets/icons/arrow-right.svg',
+                      photoPath: 'assets/icons/arrow-right.svg',
                       txtBtnColor: white100,
-                      function3: () => onStepContinue(),
+                      function: () => onStepContinue(),
                       containerColor: primaryColor,
                       borderColor: primaryColor,
                       hasIcon: false)
                 ]);
               } else {
                 return Row(mainAxisSize: MainAxisSize.max, children: [
-                  commonMaterialBtnWithIconOnLeft(
+                  commonMaterialBtn(
+                      hasIcon: true,
+                      swapIcon: true,
                       containerColor: white100,
                       width: MediaQuery.of(context).size.width / 2.44,
                       label: 'Previous',
-                      pth: 'assets/icons/back_arrow.svg',
+                      photoPath: 'assets/icons/back_arrow.svg',
                       txtBtnColor: primaryColor,
-                      function3: () => onStepCancel(),
+                      function: () => onStepCancel(),
                       borderColor: primaryColor),
-                  SizedBox(width: MediaQuery.of(context).size.width / 13.09),
-                  commonMaterialBtnWithIconRight(
+                  SizedBox(width: MediaQuery.of(context).size.width / 15.09),
+                  commonMaterialBtn(
                       width: MediaQuery.of(context).size.width / 2.44,
                       label: 'Next',
-                      pth: 'assets/icons/arrow-right.svg',
+                      photoPath: 'assets/icons/arrow-right.svg',
                       txtBtnColor: white100,
-                      function3: () => onStepContinue(),
+                      function: () => onStepContinue(),
                       containerColor: primaryColor,
                       borderColor: primaryColor,
                       hasIcon: true)
@@ -206,6 +265,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               fontWeight: FontWeight.w500),
         ),
         content: Column(
+          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonInputField(
@@ -219,61 +279,25 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                   return null;
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                function2: () {},
-                isCustomIcon: false,
-                suffixIconData: Icons.arrow_drop_down,
-                suffixIconCol: dark,
-                IconContainerHight: 42,
-                IconContainerWidth:42 ,
-
-
-                label: 'Country*',
-                textType: TextInputType.text,
-                controller: _countryController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
+            commonDropDownField(
+                itemChoose: _countryChoose,
+                labelTxt: "Country",
+                itemDataList: countryDataList,
+                onDropDownItemSelected: _onDropDownItemSelectedCountry),
+            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+            commonDropDownField(
+                itemChoose: _governmentChoose,
+                labelTxt: "government",
+                itemDataList: governmentDataList,
+                onDropDownItemSelected: _onDropDownItemSelectedGovernment),
+            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+            commonDropDownField(
+                itemChoose: _regionChoose,
+                labelTxt: "region",
+                itemDataList: regionDataList,
+                onDropDownItemSelected: _onDropDownItemSelectedRegion),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
-                IconContainerHight: 42,
-                IconContainerWidth:42 ,
-                function2: () {},
-                isCustomIcon: false,
-                suffixIconData: Icons.arrow_drop_down,
-                suffixIconCol: dark,
-                label: 'Government*',
-                textType: TextInputType.text,
-                controller: _governmentController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                IconContainerHight: 42,
-                IconContainerWidth:42 ,
-                function2: () {},
-                isCustomIcon: false,
-                suffixIconData: Icons.arrow_drop_down,
-                suffixIconCol: dark,
-                label: 'Region*',
-                textType: TextInputType.text,
-                controller: _regionController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-
                 label: 'Address*',
                 textType: TextInputType.streetAddress,
                 controller: _addressController,
@@ -285,13 +309,12 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
-                function2: () {
+                function: () {
                   print("object");
                 },
-                containerColor: primaryColor,
-                containerWithColor: true,
                 isCustomIcon: true,
-                suffixPth: "assets/icons/icon_add.svg",
+                photoHight: MediaQuery.of(context).size.height / 16,
+                suffixIconPth: "assets/icons/Group 61.svg",
                 label: 'Contact number*',
                 textType: TextInputType.phone,
                 controller: _contactnumberController,
@@ -323,11 +346,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             commonInputField(
-                containerColor: primaryColor,
-                containerWithColor: true,
                 isCustomIcon: true,
-                suffixPth: "assets/icons/Button-label.svg",
+                suffixIconPth: "assets/icons/filled.svg",
                 label: 'License number',
+                photoHight: MediaQuery.of(context).size.height / 16,
                 textType: TextInputType.phone,
                 controller: _licensenumberController,
                 validator: (value) {
@@ -338,11 +360,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
-                containerColor: primaryColor,
-                containerWithColor: true,
                 isCustomIcon: true,
-                suffixPth: "assets/icons/Button-label.svg",
+                suffixIconPth: "assets/icons/filled.svg",
                 label: 'Commercial register',
+                photoHight: MediaQuery.of(context).size.height / 16,
                 textType: TextInputType.text,
                 controller: _commercialController,
                 validator: (value) {
@@ -508,4 +529,22 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
       });
     }
   } //to cancel and close the opened list and move the previous step
+}
+
+class CountryListDataModel {
+  String country_name;
+  String country_logo_path;
+  CountryListDataModel(this.country_name, this.country_logo_path);
+}
+
+class GovernmentListDataModel {
+  String government_name;
+  String government_logo_path;
+  GovernmentListDataModel(this.government_name, this.government_logo_path);
+}
+
+class RegionListDataModel {
+  String region_name;
+  String region_logo_path;
+  RegionListDataModel(this.region_name, this.region_logo_path);
 }

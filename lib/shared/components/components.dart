@@ -1,17 +1,29 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../model/dropdown_model/dropdown_model.dart';
 import '../styles/colors.dart';
 import 'functions.dart';
 
 //this is widget use to make stander MaterialBtn in app
-Widget commonMaterialBtn(
-        {@required String? label, @required function, @required width}) =>
+Widget commonMaterialBtn({
+  @required String? label,
+  @required function,
+  @required width,
+  bool hasIcon = false,
+  String txtBtnColor = white100,
+  String containerColor = primaryColor,
+  String borderColor = primaryColor,
+  String photoPath = "",
+  bool swapIcon = false,
+}) =>
     Container(
       decoration: BoxDecoration(
+          border: Border.all(color: HexColor(borderColor)),
           borderRadius: BorderRadius.circular(6),
-          color: HexColor(primaryColor)),
+          color: HexColor(containerColor)),
       child: MaterialButton(
         onPressed: function,
         height: 52.h,
@@ -20,16 +32,45 @@ Widget commonMaterialBtn(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),
         ),
-        child: Text(
-          label!,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.sp,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        child: hasIcon
+            ? (swapIcon
+                ? Row(
+                    mainAxisSize: MainAxisSize.min, // Ensure tight layout
+                    children: [
+                      setPhoto(
+                          kind: 1, path: photoPath, height: 10.67, width: 16),
+                      const SizedBox(
+                          width: 8), // Optional spacing between text and icon
+                      Text(
+                        label!,
+                        style: TextStyle(color: HexColor(txtBtnColor)),
+                      ),
+                    ],
+                  )
+                : Row(
+                    mainAxisSize: MainAxisSize.min, // Ensure tight layout
+                    children: [
+                      Text(
+                        label!,
+                        style: TextStyle(color: HexColor(txtBtnColor)),
+                      ),
+                      const SizedBox(
+                          width: 8), // Optional spacing between text and icon
+
+                      setPhoto(
+                          kind: 1, path: photoPath, height: 10.67, width: 16),
+                    ],
+                  ))
+            : Text(
+                label!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: HexColor(txtBtnColor),
+                  fontSize: 16.sp,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
       ),
     );
 
@@ -65,136 +106,149 @@ Widget commonInputField({
   TextEditingController? controller,
   Icon? prefixIcon,
   IconData? suffixIconData,
-  var suffixPth,
-  double? IconContainerWidth,
-  double? IconContainerHight,
-
-
+  String suffixIconPth = "",
+  double cursorWidth = 2.0,
+  double? photoHight,
+  double? photowidth,
   bool isPassword = false,
-  bool containerWithColor = false,
-  String suffixIconCol = placeholder,
   bool isCustomIcon = false,
-  String? containerColor,
+  String suffixIconCol = placeholder,
   String? label,
   String? Function(String?)? validator,
-  VoidCallback? function2,
+  VoidCallback? function,
 }) =>
     TextFormField(
+      cursorWidth: cursorWidth,
       controller: controller,
       keyboardType: textType,
       obscureText: isPassword,
       validator: validator,
       decoration: InputDecoration(
         labelText: label!,
-        labelStyle: TextStyle(color: HexColor(hint)),
+        labelStyle: TextStyle(
+            color: HexColor(hint),
+            fontFamily: "Poppins",
+            fontWeight: FontWeight.w400,
+            fontSize: 14),
         border: const OutlineInputBorder(),
         contentPadding:
             EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(4.0),
+          borderSide: BorderSide(
+              color: HexColor(primaryColor),
+              width: 1.0), // Change the color as desired
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: HexColor(placeholder), width: 1.0.w),
         ),
         prefixIcon: prefixIcon,
         suffixIcon: isCustomIcon
             ? InkWell(
-                onTap: function2,
-                child: Container(
-                    margin: const EdgeInsetsDirectional.only(end: 6),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.0),
-                      color: containerWithColor ? HexColor(containerColor!) : null,
-                    ),
-                    padding: const EdgeInsets.all(12.0),
-                    width: IconContainerWidth,
-                    height: IconContainerHight,
-                    child: setPhoto(
-                        kind: 1,
-                        path: suffixPth,
-
-
-                    )),
-              )
+                onTap: function,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 4.0),
+                  child: setPhoto(
+                      kind: 1,
+                      path: suffixIconPth,
+                      height: photoHight,
+                      width: photowidth),
+                ))
             : IconButton(
-                onPressed: function2,
-                icon:
-                     Icon(suffixIconData, color: HexColor(suffixIconCol),size: 25)
-                    ,
+                onPressed: function,
+                icon: Icon(suffixIconData,
+                    color: HexColor(suffixIconCol), size: 25),
               ),
       ),
     );
 
-Widget commonMaterialBtnWithIconOnLeft(
-        {@required String? label,
-        @required width,
-        required String pth,
-        required String txtBtnColor,
-        required function3,
-        required String containerColor,
-        required String borderColor}) =>
-    InkWell(
-      onTap: function3,
-      child: Container(
-        alignment: Alignment.center,
-        width: width,
-        height: 48.w,
-        decoration: BoxDecoration(
-            color: HexColor(containerColor),
-            border: Border.all(color: HexColor(borderColor)),
-            borderRadius: BorderRadius.circular(4)),
-        child: Row(
-          mainAxisSize: MainAxisSize.min, // Ensure tight layout
-          children: [
-            setPhoto(kind: 1, path: pth, height: 10.67, width: 16),
-            const SizedBox(width: 8), // Optional spacing between text and icon
 
-            Text(
-              label!,
-              style: TextStyle(color: HexColor(txtBtnColor)),
-            ),
-          ],
-        ),
-      ),
-    );
 
-Widget commonMaterialBtnWithIconRight(
-        {@required String? label,
-        @required width,
-        required String pth,
-        required String txtBtnColor,
-        required function3,
-        required String containerColor,
-        required String borderColor,
-        required bool hasIcon}) =>
-    InkWell(
-      onTap: function3,
-      child: Container(
-          alignment: Alignment.center,
-          height: 48.w,
-          width: width,
-          decoration: BoxDecoration(
-              color: HexColor(containerColor),
-              border: Border.all(color: HexColor(borderColor)),
-              borderRadius: BorderRadius.circular(4)),
-          child: (hasIcon)
-              ? Row(
-                  mainAxisSize: MainAxisSize.min, // Ensure tight layout
-                  children: [
-                    Text(
-                      label!,
-                      style: TextStyle(color: HexColor(txtBtnColor)),
-                    ),
-                    const SizedBox(
-                        width: 8), // Optional spacing between text and icon
-
-                    setPhoto(kind: 1, path: pth, height: 10.67, width: 16),
-                  ],
+Widget commonDropDownField(
+        {required itemChoose,
+        required String labelTxt,
+        String? infPhotoPath,
+        required List<ListDataModel> itemDataList,
+        required Function onDropDownItemSelected }) =>
+    SizedBox(
+      height: 61.2,
+      child: DropdownButtonFormField2<ListDataModel>(
+        decoration: InputDecoration(
+          labelText: labelTxt,
+          labelStyle: TextStyle(
+              color:
+                  itemChoose != null ? HexColor(primaryColor) : HexColor(hint),
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.w400,
+              fontSize: 14),
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
+          enabledBorder: itemChoose != null
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(
+                      color: HexColor(primaryColor),
+                      width: 1.0), // Change the color as desired
                 )
-              : Row(
-                  mainAxisSize: MainAxisSize.min, // Ensure tight layout
-                  children: [
-                    Text(
-                      label!,
-                      style: TextStyle(color: HexColor(txtBtnColor)),
-                    ),
-                  ],
-                )),
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(
+                      color: HexColor(placeholder),
+                      width: 1.0), // Change the color as desired
+                ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4.0),
+            borderSide: BorderSide(
+                color: HexColor(primaryColor),
+                width: 1.0), // Change the color as desired
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4),
+          ),
+// Add more decoration..
+        ),
+        iconStyleData: IconStyleData(
+            openMenuIcon: const Icon(Icons.arrow_drop_up),
+            iconEnabledColor: HexColor(dark),
+            iconDisabledColor: HexColor(dark)),
+        dropdownStyleData: DropdownStyleData(
+            decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+        )),
+        style: TextStyle(
+          fontSize: 14,
+          color: HexColor(dark),
+          fontFamily: "Poppins",
+        ),
+        items: itemDataList
+            .map<DropdownMenuItem<ListDataModel>>((ListDataModel value) {
+          return DropdownMenuItem(
+            value: value,
+            child: value.infoLogoPath!=null?Row(
+              children: [
+                setPhoto(
+                  kind: 1,
+                  path: value.infPhotoPath,
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                Text(value.infoName),
+              ],
+            ):Row(
+              children: [
+
+
+                Text(value.infoName),
+              ],
+            ),
+          );
+        }).toList(),
+        isExpanded: true,
+        isDense: true,
+        value: itemChoose,
+        onChanged: (ListDataModel? newSelectedCountry) {
+          onDropDownItemSelected(newSelectedCountry!);
+        },
+      ),
     );
