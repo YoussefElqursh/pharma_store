@@ -46,6 +46,8 @@ dependencies:
   flutter_svg: ^2.0.9
   flutter_screenutil: ^5.9.0
   dropdown_button2: ^2.3.8
+  contacts_service: ^0.6.3
+
 
 dev_dependencies:
   flutter_test:

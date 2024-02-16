@@ -1,7 +1,9 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../model/dropdown_model/dropdown_model.dart';
 import '../styles/colors.dart';
 import 'functions.dart';
 
@@ -116,7 +118,6 @@ Widget commonInputField({
   VoidCallback? function,
 }) =>
     TextFormField(
-
       cursorWidth: cursorWidth,
       controller: controller,
       keyboardType: textType,
@@ -124,7 +125,9 @@ Widget commonInputField({
       validator: validator,
       decoration: InputDecoration(
         labelText: label!,
-        labelStyle: TextStyle(color: HexColor(hint),fontFamily: "Poppins",
+        labelStyle: TextStyle(
+            color: HexColor(hint),
+            fontFamily: "Poppins",
             fontWeight: FontWeight.w400,
             fontSize: 14),
         border: const OutlineInputBorder(),
@@ -132,10 +135,10 @@ Widget commonInputField({
             EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
-      borderSide: BorderSide(
-          color: HexColor(primaryColor),
-          width: 1.0), // Change the color as desired
-    ),
+          borderSide: BorderSide(
+              color: HexColor(primaryColor),
+              width: 1.0), // Change the color as desired
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: HexColor(placeholder), width: 1.0.w),
         ),
@@ -161,5 +164,91 @@ Widget commonInputField({
 
 
 
+Widget commonDropDownField(
+        {required itemChoose,
+        required String labelTxt,
+        String? infPhotoPath,
+        required List<ListDataModel> itemDataList,
+        required Function onDropDownItemSelected }) =>
+    SizedBox(
+      height: 61.2,
+      child: DropdownButtonFormField2<ListDataModel>(
+        decoration: InputDecoration(
+          labelText: labelTxt,
+          labelStyle: TextStyle(
+              color:
+                  itemChoose != null ? HexColor(primaryColor) : HexColor(hint),
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.w400,
+              fontSize: 14),
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
+          enabledBorder: itemChoose != null
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(
+                      color: HexColor(primaryColor),
+                      width: 1.0), // Change the color as desired
+                )
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(
+                      color: HexColor(placeholder),
+                      width: 1.0), // Change the color as desired
+                ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4.0),
+            borderSide: BorderSide(
+                color: HexColor(primaryColor),
+                width: 1.0), // Change the color as desired
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4),
+          ),
+// Add more decoration..
+        ),
+        iconStyleData: IconStyleData(
+            openMenuIcon: const Icon(Icons.arrow_drop_up),
+            iconEnabledColor: HexColor(dark),
+            iconDisabledColor: HexColor(dark)),
+        dropdownStyleData: DropdownStyleData(
+            decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+        )),
+        style: TextStyle(
+          fontSize: 14,
+          color: HexColor(dark),
+          fontFamily: "Poppins",
+        ),
+        items: itemDataList
+            .map<DropdownMenuItem<ListDataModel>>((ListDataModel value) {
+          return DropdownMenuItem(
+            value: value,
+            child: value.infoLogoPath!=null?Row(
+              children: [
+                setPhoto(
+                  kind: 1,
+                  path: value.infPhotoPath,
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                Text(value.infoName),
+              ],
+            ):Row(
+              children: [
 
 
+                Text(value.infoName),
+              ],
+            ),
+          );
+        }).toList(),
+        isExpanded: true,
+        isDense: true,
+        value: itemChoose,
+        onChanged: (ListDataModel? newSelectedCountry) {
+          onDropDownItemSelected(newSelectedCountry!);
+        },
+      ),
+    );

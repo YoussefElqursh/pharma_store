@@ -1,13 +1,19 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pharma_store/module/5-login_module/login_screen.dart';
+import '../../model/dropdown_model/dropdown_model.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/constrants.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
 import '../../shared/styles/custom_checkbox.dart';
+
+import 'package:contacts_service/contacts_service.dart';
+Future<List<Contact>> getContacts() async {
+  List<Contact> contacts = (await ContactsService.getContacts()).toList();
+  return contacts;
+}
 
 class CreateAccountScreen extends StatefulWidget {
   static const String routeName = 'CreateAccountScreenRoute';
@@ -37,23 +43,57 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   final _phonenumberController = TextEditingController();
   //final _formKey = GlobalKey<FormState>();
   int _current_step = 0;
-  CountryListDataModel? _countryChoose;
-  List<CountryListDataModel> countryDataList = [
-    CountryListDataModel("Egypt", "assets/icons/Password-field.svg"),
-    CountryListDataModel("Tunisia", "assets/icons/TN.svg"),
+  ListDataModel? _countryChoose;
+  List<ListDataModel> countryDataList = [
+    ListDataModel(
+        infoName: 'Egypt', infoLogoPath: "assets/icons/Password-field.svg"),
+   ListDataModel(infoName: 'Tunisia', infoLogoPath: "assets/icons/TN.svg"),
   ];
+
+  ListDataModel? _governmentChoose;
+  List<ListDataModel> governmentDataList = [
+    ListDataModel(
+        infoName: 'Alexandria'),
+    ListDataModel(infoName: 'Tanta')
+  ];
+
+  ListDataModel? _regionChoose;
+  List<ListDataModel> regionDataList = [
+    ListDataModel(
+        infoName: 'Asfra 45st'),
+    ListDataModel(infoName: 'Abo Qir'),
+  ];
+
   @override
   void initState() {
     super.initState();
     _countryChoose = null;
+    _governmentChoose = null;
+    _regionChoose = null;
   }
 
-  void _onDropDownItemSelected(CountryListDataModel newSelectedBank) {
+  void _onDropDownItemSelectedCountry(ListDataModel newSelectedCountry) {
     setState(() {
-
-      _countryChoose != newSelectedBank
-          ? _countryChoose = newSelectedBank
+      _countryChoose != newSelectedCountry
+          ? _countryChoose = newSelectedCountry
           : _countryChoose = null;
+    });
+  }
+
+  void _onDropDownItemSelectedGovernment(
+      ListDataModel newSelectedGovernment) {
+    setState(() {
+      _governmentChoose != newSelectedGovernment
+          ? _governmentChoose = newSelectedGovernment
+          : _governmentChoose = null;
+    });
+  }
+
+  void _onDropDownItemSelectedRegion(ListDataModel newSelectedRegion) {
+    setState(() {
+      _regionChoose != newSelectedRegion
+          ? _regionChoose = newSelectedRegion
+          : _regionChoose = null;
     });
   }
 
@@ -243,257 +283,23 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                   return null;
                 }),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            SizedBox(
-              height: 61.2,
-              child: DropdownButtonFormField2<CountryListDataModel>(
-                decoration: InputDecoration(
-                  labelText: "Country*",
-                  labelStyle: TextStyle(
-                      color:_countryChoose != null?HexColor(primaryColor):HexColor(hint),
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14),
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: 15.0.h, horizontal: 15.0.w),
-                  enabledBorder: _countryChoose != null
-                      ? OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(
-                              color: HexColor(primaryColor),
-                              width: 1.0), // Change the color as desired
-                        )
-                      : OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: BorderSide(
-                              color: HexColor(placeholder),
-                              width: 1.0), // Change the color as desired
-                        ),
-                  focusedBorder: OutlineInputBorder(
-
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-
-                        color: HexColor(primaryColor),
-                        width: 1.0), // Change the color as desired
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  // Add more decoration..
-                ),
-                iconStyleData: IconStyleData(
-                    openMenuIcon: const Icon(Icons.arrow_drop_up),
-                    iconEnabledColor: HexColor(dark),
-                    iconDisabledColor: HexColor(dark)),
-                dropdownStyleData: DropdownStyleData(
-                    decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                )),
-                style: TextStyle(
-                  fontSize: 14,
-                  color: HexColor(dark),
-                  fontFamily: "Poppins",
-                ),
-                items: countryDataList
-                    .map<DropdownMenuItem<CountryListDataModel>>(
-                        (CountryListDataModel value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        setPhoto(
-                          kind: 1,
-                          path: value.country_logo_path,
-                        ),
-                        // Icon(valueItem.bank_logo),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Text(value.country_name),
-                      ],
-                    ),
-                  );
-                }).toList(),
-                isExpanded: true,
-                isDense: true,
-                value: _countryChoose,
-                onChanged: (CountryListDataModel? newSelectedCountry) {
-                  _onDropDownItemSelected(newSelectedCountry!);
-
-                },
-              ),
-            ),
+            commonDropDownField(
+                itemChoose: _countryChoose,
+                labelTxt: "Country",
+                itemDataList: countryDataList,
+                onDropDownItemSelected: _onDropDownItemSelectedCountry),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            SizedBox(
-              height: 61.2,
-              child: DropdownButtonFormField2<CountryListDataModel>(
-                decoration: InputDecoration(
-
-
-
-                  labelText: "Government*",
-                  labelStyle: TextStyle(
-                      color:_countryChoose != null?HexColor(primaryColor):HexColor(hint),
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14),
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: 15.0.h, horizontal: 15.0.w),
-                  enabledBorder: _countryChoose != null
-                      ? OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-                        color: HexColor(primaryColor),
-                        width: 1.0), // Change the color as desired
-                  )
-                      : OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-                        color: HexColor(placeholder),
-                        width: 1.0), // Change the color as desired
-                  ),
-                  focusedBorder: OutlineInputBorder(
-
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-
-                        color: HexColor(primaryColor),
-                        width: 1.0), // Change the color as desired
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  // Add more decoration..
-                ),
-                iconStyleData: IconStyleData(
-                    openMenuIcon: const Icon(Icons.arrow_drop_up),
-                    iconEnabledColor: HexColor(dark),
-                    iconDisabledColor: HexColor(dark)),
-                dropdownStyleData: DropdownStyleData(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                    )),
-                style: TextStyle(
-                  fontSize: 14,
-                  color: HexColor(dark),
-                  fontFamily: "Poppins",
-                ),
-                items: countryDataList
-                    .map<DropdownMenuItem<CountryListDataModel>>(
-                        (CountryListDataModel value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            setPhoto(
-                              kind: 1,
-                              path: value.country_logo_path,
-                            ),
-                            // Icon(valueItem.bank_logo),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Text(value.country_name),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                isExpanded: true,
-                isDense: true,
-                value: _countryChoose,
-                onChanged: (CountryListDataModel? newSelectedCountry) {
-                  _onDropDownItemSelected(newSelectedCountry!);
-
-                },
-              ),
-            ),
+            commonDropDownField(
+                itemChoose: _governmentChoose,
+                labelTxt: "government",
+                itemDataList: governmentDataList,
+                onDropDownItemSelected: _onDropDownItemSelectedGovernment),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            SizedBox(
-              height: 61.2,
-              child: DropdownButtonFormField2<CountryListDataModel>(
-                decoration: InputDecoration(
-
-
-
-                  labelText: "Region*",
-                  labelStyle: TextStyle(
-                      color:_countryChoose != null?HexColor(primaryColor):HexColor(hint),
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14),
-                  contentPadding: EdgeInsets.symmetric(
-                      vertical: 15.0.h, horizontal: 15.0.w),
-                  enabledBorder: _countryChoose != null
-                      ? OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-                        color: HexColor(primaryColor),
-                        width: 1.0), // Change the color as desired
-                  )
-                      : OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-                        color: HexColor(placeholder),
-                        width: 1.0), // Change the color as desired
-                  ),
-                  focusedBorder: OutlineInputBorder(
-
-                    borderRadius: BorderRadius.circular(4.0),
-                    borderSide: BorderSide(
-
-                        color: HexColor(primaryColor),
-                        width: 1.0), // Change the color as desired
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  // Add more decoration..
-                ),
-                iconStyleData: IconStyleData(
-                    openMenuIcon: const Icon(Icons.arrow_drop_up),
-                    iconEnabledColor: HexColor(dark),
-                    iconDisabledColor: HexColor(dark)),
-                dropdownStyleData: DropdownStyleData(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                    )),
-                style: TextStyle(
-                  fontSize: 14,
-                  color: HexColor(dark),
-                  fontFamily: "Poppins",
-                ),
-                items: countryDataList
-                    .map<DropdownMenuItem<CountryListDataModel>>(
-                        (CountryListDataModel value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            setPhoto(
-                              kind: 1,
-                              path: value.country_logo_path,
-                            ),
-                            // Icon(valueItem.bank_logo),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Text(value.country_name),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                isExpanded: true,
-                isDense: true,
-                value: _countryChoose,
-                onChanged: (CountryListDataModel? newSelectedCountry) {
-                  _onDropDownItemSelected(newSelectedCountry!);
-
-                },
-              ),
-            ),
+            commonDropDownField(
+                itemChoose: _regionChoose,
+                labelTxt: "region",
+                itemDataList: regionDataList,
+                onDropDownItemSelected: _onDropDownItemSelectedRegion),
             SizedBox(height: MediaQuery.of(context).size.height / 42.835),
             commonInputField(
                 label: 'Address*',
@@ -733,4 +539,16 @@ class CountryListDataModel {
   String country_name;
   String country_logo_path;
   CountryListDataModel(this.country_name, this.country_logo_path);
+}
+
+class GovernmentListDataModel {
+  String government_name;
+  String government_logo_path;
+  GovernmentListDataModel(this.government_name, this.government_logo_path);
+}
+
+class RegionListDataModel {
+  String region_name;
+  String region_logo_path;
+  RegionListDataModel(this.region_name, this.region_logo_path);
 }
