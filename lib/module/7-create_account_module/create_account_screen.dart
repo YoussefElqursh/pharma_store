@@ -9,11 +9,7 @@ import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
 import '../../shared/styles/custom_checkbox.dart';
 
-import 'package:contacts_service/contacts_service.dart';
-Future<List<Contact>> getContacts() async {
-  List<Contact> contacts = (await ContactsService.getContacts()).toList();
-  return contacts;
-}
+
 
 class CreateAccountScreen extends StatefulWidget {
   static const String routeName = 'CreateAccountScreenRoute';
