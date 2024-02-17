@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 const String primaryColor = "#4A72FF";
 const String dark = "#23262A";
