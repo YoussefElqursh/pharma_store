@@ -9,8 +9,6 @@ import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
 import '../../shared/styles/custom_checkbox.dart';
 
-
-
 class CreateAccountScreen extends StatefulWidget {
   static const String routeName = 'CreateAccountScreenRoute';
   const CreateAccountScreen({super.key});
@@ -26,37 +24,33 @@ class CreateAccountScreen extends StatefulWidget {
 
 class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   final _nameController = TextEditingController();
-  final _countryController = TextEditingController();
   final _contactnumberController = TextEditingController();
-  final _governmentController = TextEditingController();
-  final _regionController = TextEditingController();
   final _addressController = TextEditingController();
   final _commercialController = TextEditingController();
+  final _pharmacyPhotoController = TextEditingController();
+
   final _licensenumberController = TextEditingController();
   final _passwordController = TextEditingController();
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _phonenumberController = TextEditingController();
-  //final _formKey = GlobalKey<FormState>();
   int _current_step = 0;
   ListDataModel? _countryChoose;
   List<ListDataModel> countryDataList = [
     ListDataModel(
         infoName: 'Egypt', infoLogoPath: "assets/icons/Password-field.svg"),
-   ListDataModel(infoName: 'Tunisia', infoLogoPath: "assets/icons/TN.svg"),
+    ListDataModel(infoName: 'Tunisia', infoLogoPath: "assets/icons/TN.svg"),
   ];
 
   ListDataModel? _governmentChoose;
   List<ListDataModel> governmentDataList = [
-    ListDataModel(
-        infoName: 'Alexandria'),
+    ListDataModel(infoName: 'Alexandria'),
     ListDataModel(infoName: 'Tanta')
   ];
 
   ListDataModel? _regionChoose;
   List<ListDataModel> regionDataList = [
-    ListDataModel(
-        infoName: 'Asfra 45st'),
+    ListDataModel(infoName: 'Asfra 45st'),
     ListDataModel(infoName: 'Abo Qir'),
   ];
 
@@ -76,8 +70,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
     });
   }
 
-  void _onDropDownItemSelectedGovernment(
-      ListDataModel newSelectedGovernment) {
+  void _onDropDownItemSelectedGovernment(ListDataModel newSelectedGovernment) {
     setState(() {
       _governmentChoose != newSelectedGovernment
           ? _governmentChoose = newSelectedGovernment
@@ -85,13 +78,20 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
     });
   }
 
-  void _onDropDownItemSelectedRegion(ListDataModel newSelectedRegion) {
+  _onDropDownItemSelectedRegion(ListDataModel newSelectedRegion) {
     setState(() {
       _regionChoose != newSelectedRegion
           ? _regionChoose = newSelectedRegion
           : _regionChoose = null;
     });
   }
+
+  final GlobalKey<FormState> _step1Key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _step2Key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _step3Key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _step4Key = GlobalKey<FormState>();
+
+  bool _validationInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,86 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
             child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               InkWell(
                 onTap: () {
-                  navigateTo(context, LoginScreen.routeName);
+                  bool hasValue = false;
+
+                  // Check if any field in the stepper has a non-null value
+                  if (_current_step <= 3) {
+                    // Check for fields in step 1
+                    if (_nameController.text.isNotEmpty ||
+                        _addressController.text.isNotEmpty ||
+                        _contactnumberController.text.isNotEmpty ||
+                        _countryChoose != null ||
+                        _governmentChoose != null ||
+                        _regionChoose != null) {
+                      hasValue = true;
+                    }
+
+                    // Check for fields in step 2
+                    if (_licensenumberController.text.isNotEmpty ||
+                        _commercialController.text.isNotEmpty ||
+                        _pharmacyPhotoController.text.isNotEmpty) {
+                      hasValue = true;
+                    }
+
+                    // Check for fields in step 3
+                    if (_firstnameController.text.isNotEmpty ||
+                        _lastnameController.text.isNotEmpty ||
+                        _phonenumberController.text.isNotEmpty) {
+                      hasValue = true;
+                    }
+
+                    // Check for fields in step 4
+                    if (_passwordController.text.isNotEmpty) {
+                      hasValue = true;
+                    }
+                  }
+
+                  if (hasValue) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.all(24.0),
+                          title: const Text(
+                            "Discard creating account?",
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Poppins"),
+                          ),
+                          content: Text(
+                            "Your data will be lost, are you sure you want to discard creating account?",
+                            style: TextStyle(
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: HexColor(darkGray)),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Cancel"),
+                            ),
+                            SizedBox(width: 31),
+                            commonMaterialBtn(
+                              containerColor: primaryColor,
+                              label: "Discard",
+                              function: () {
+                                Navigator.pop(context);
+                                navigateTo(context, LoginScreen.routeName);
+                              },
+                              width: 100.0,
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    navigateTo(context, LoginScreen.routeName);
+                  }
                 },
                 child: setPhoto(
                     kind: 1,
@@ -144,6 +223,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height / 35),
           Stepper(
+            controller: ScrollController(),
             connectorThickness: 0,
             margin: const EdgeInsets.all(20),
             currentStep: _current_step,
@@ -264,68 +344,106 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               fontFamily: "Poppins",
               fontWeight: FontWeight.w500),
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            commonInputField(
-                label: 'Name*',
-                textType: TextInputType.text,
-                controller: _nameController,
+        content: Form(
+          key: _step1Key,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              commonInputField(
+                  label: 'Name*',
+                  textType: TextInputType.text,
+                  controller: _nameController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter Name';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonDropDownField(
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
+                  setState(() {
+                    _validationInProgress = value ==
+                        null; // Set to true if value is null (validation in progress)
+                  });
+                  if (value == null) {
+                    return 'Please select a country';
                   }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonDropDownField(
-                itemChoose: _countryChoose,
-                labelTxt: "Country",
-                itemDataList: countryDataList,
-                onDropDownItemSelected: _onDropDownItemSelectedCountry),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonDropDownField(
-                itemChoose: _governmentChoose,
-                labelTxt: "government",
-                itemDataList: governmentDataList,
-                onDropDownItemSelected: _onDropDownItemSelectedGovernment),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonDropDownField(
-                itemChoose: _regionChoose,
-                labelTxt: "region",
-                itemDataList: regionDataList,
-                onDropDownItemSelected: _onDropDownItemSelectedRegion),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                label: 'Address*',
-                textType: TextInputType.streetAddress,
-                controller: _addressController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                function: () {
-                  print("object");
+                  return null; // Return null when the selection is valid
                 },
-                isCustomIcon: true,
-                photoHight: MediaQuery.of(context).size.height / 16,
-                suffixIconPth: "assets/icons/Group 61.svg",
-                label: 'Contact number*',
-                textType: TextInputType.phone,
-                controller: _contactnumberController,
+                itemChoose: _countryChoose,
+                labelTxt: "Country*",
+                itemDataList: countryDataList,
+                onDropDownItemSelected: _onDropDownItemSelectedCountry,
+                isValidationInProgress: _validationInProgress,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonDropDownField(
                 validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
+                  setState(() {
+                    _validationInProgress = value ==
+                        null; // Set to true if value is null (validation in progress)
+                  });
+                  if (value == null) {
+                    return 'Please select a government';
                   }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 21.4175),
-          ],
+                  return null; // Return null when the selection is valid
+                },
+                itemChoose: _governmentChoose,
+                labelTxt: "government*",
+                itemDataList: governmentDataList,
+                onDropDownItemSelected: _onDropDownItemSelectedGovernment,
+                isValidationInProgress: _validationInProgress,
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonDropDownField(
+                  validator: (value) {
+                    setState(() {
+                      _validationInProgress = value ==
+                          null; // Set to true if value is null (validation in progress)
+                    });
+                    if (value == null) {
+                      return 'Please select a region';
+                    }
+                    return null; // Return null when the selection is valid
+                  },
+                  itemChoose: _regionChoose,
+                  labelTxt: "region*",
+                  itemDataList: regionDataList,
+                  onDropDownItemSelected: _onDropDownItemSelectedRegion,
+                  isValidationInProgress: _validationInProgress),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonInputField(
+                  label: 'Address*',
+                  textType: TextInputType.streetAddress,
+                  controller: _addressController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter address';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonInputField(
+                  function: () {
+                    print("object");
+                  },
+                  isCustomIcon: true,
+                  photoHight: MediaQuery.of(context).size.height / 16,
+                  suffixIconPth: "assets/icons/Group 61.svg",
+                  label: 'Contact number*',
+                  textType: TextInputType.phone,
+                  controller: _contactnumberController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter contact number';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 21.4175),
+            ],
+          ),
         ),
         isActive: _current_step >= 0,
         state: _current_step <= 0 ? StepState.indexed : StepState.complete,
@@ -342,38 +460,53 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 fontSize: 16.sp,
                 fontFamily: "Poppins",
                 fontWeight: FontWeight.w500)),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            commonInputField(
-                isCustomIcon: true,
-                suffixIconPth: "assets/icons/filled.svg",
-                label: 'License number',
-                photoHight: MediaQuery.of(context).size.height / 16,
-                textType: TextInputType.phone,
-                controller: _licensenumberController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                isCustomIcon: true,
-                suffixIconPth: "assets/icons/filled.svg",
-                label: 'Commercial register',
-                photoHight: MediaQuery.of(context).size.height / 16,
-                textType: TextInputType.text,
-                controller: _commercialController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 21.4175),
-          ],
+        content: Form(
+          key: _step2Key,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              commonInputField(
+                  label: 'License number*',
+                  photoHight: MediaQuery.of(context).size.height / 16,
+                  textType: TextInputType.phone,
+                  controller: _licensenumberController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter license number ';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonInputField(
+                  isCustomIcon: true,
+                  suffixIconPth: "assets/icons/filled.svg",
+                  label: 'Commercial register*',
+                  photoHight: MediaQuery.of(context).size.height / 16,
+                  textType: TextInputType.phone,
+                  controller: _commercialController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter commercial register ';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonInputField(
+                  isCustomIcon: true,
+                  suffixIconPth: "assets/icons/filled.svg",
+                  label: 'Pharmacy photo*',
+                  photoHight: MediaQuery.of(context).size.height / 16,
+                  textType: TextInputType.text,
+                  controller: _pharmacyPhotoController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter pharmacy photo';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 21.4175),
+            ],
+          ),
         ),
         isActive: _current_step >= 1,
         state: _current_step <= 1 ? StepState.indexed : StepState.complete,
@@ -394,54 +527,57 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               fontFamily: "Poppins",
               fontWeight: FontWeight.w500),
         ),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            commonInputField(
-                label: 'First name*',
-                textType: TextInputType.text,
-                controller: _firstnameController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                label: 'Last name*',
-                textType: TextInputType.text,
-                controller: _lastnameController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                label: 'Email',
-                textType: TextInputType.emailAddress,
-                controller: _phonenumberController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            commonInputField(
-                label: 'Phone number*',
-                textType: TextInputType.phone,
-                controller: _licensenumberController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 21.4175),
-          ],
+        content: Form(
+          key: _step3Key,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              commonInputField(
+                  label: 'First name*',
+                  textType: TextInputType.text,
+                  controller: _firstnameController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter phone number';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonInputField(
+                  label: 'Last name*',
+                  textType: TextInputType.text,
+                  controller: _lastnameController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter phone number';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonInputField(
+                  label: 'Email(optional)',
+                  textType: TextInputType.emailAddress,
+                  controller: _phonenumberController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter phone number';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              commonInputField(
+                  label: 'Phone number*',
+                  textType: TextInputType.phone,
+                  controller: _licensenumberController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter phone number';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 21.4175),
+            ],
+          ),
         ),
         isActive: _current_step >= 2,
         state: _current_step <= 2 ? StepState.indexed : StepState.complete,
@@ -462,34 +598,37 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               fontFamily: "Poppins",
               fontWeight: FontWeight.w500),
         ),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            commonInputField(
-                isPassword: true,
-                suffixIconData: Icons.visibility_off_outlined,
-                label: 'Password*',
-                textType: TextInputType.visiblePassword,
-                controller: _passwordController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please, Enter phone number';
-                  }
-                  return null;
-                }),
-            SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 2.0, right: 8.0),
-                  child: CustomCheckbox(),
-                ),
-                privacyPolicyLinkAndTermsOfService()
-              ],
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height / 25.96),
-          ],
+        content: Form(
+          key: _step4Key,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              commonInputField(
+                  isPassword: true,
+                  suffixIconData: Icons.visibility_off_outlined,
+                  label: 'Password*',
+                  textType: TextInputType.visiblePassword,
+                  controller: _passwordController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'please, Enter password';
+                    }
+                    return null;
+                  }),
+              SizedBox(height: MediaQuery.of(context).size.height / 42.835),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 2.0, right: 8.0),
+                    child: CustomCheckbox(),
+                  ),
+                  privacyPolicyLinkAndTermsOfService()
+                ],
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 25.96),
+            ],
+          ),
         ),
         isActive: _current_step >= 3,
         state: _current_step <= 3 ? StepState.indexed : StepState.complete,
@@ -498,27 +637,46 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   }
 
   onStepContinue() {
-    final isLastStep = _current_step == getSteps().length - 1;
-    if (isLastStep) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Form Submitted"),
-              content: const Text("Your form has been submitted successfuly"),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("OK"))
-              ],
-            );
-          });
-    } else {
-      setState(() {
-        _current_step++;
-      });
+    if (_current_step == 0) {
+      if (_step1Key.currentState!.validate()) {
+        // Proceed to the next step
+        setState(() {
+          _current_step++;
+        });
+      }
+    } else if (_current_step == 1) {
+      if (_step2Key.currentState!.validate()) {
+        // Proceed to the next step
+        setState(() {
+          _current_step++;
+        });
+      }
+    } else if (_current_step == 2) {
+      if (_step3Key.currentState!.validate()) {
+        // Proceed to the next step
+        setState(() {
+          _current_step++;
+        });
+      }
+    } else if (_current_step == 3) {
+      if (_step4Key.currentState!.validate()) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Form Submitted"),
+                content: const Text("Your form has been submitted successfuly"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("OK"))
+                ],
+              );
+            });
+        // Proceed to the next step
+      }
     }
   } //to move next step and display the list in each step
 

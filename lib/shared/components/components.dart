@@ -18,15 +18,15 @@ Widget commonMaterialBtn({
   String borderColor = primaryColor,
   String photoPath = "",
   bool swapIcon = false,
-}) =>
-    Container(
+}) {
+  return Container(
       decoration: BoxDecoration(
           border: Border.all(color: HexColor(borderColor)),
           borderRadius: BorderRadius.circular(6),
           color: HexColor(containerColor)),
       child: MaterialButton(
         onPressed: function,
-        height: 52.h,
+        height: 48.h,
         minWidth: width,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -73,6 +73,7 @@ Widget commonMaterialBtn({
               ),
       ),
     );
+}
 
 //this is widget use to make stander TextBtn in app
 Widget commonTextBtn({@required String? label, @required function}) => InkWell(
@@ -124,6 +125,7 @@ Widget commonInputField({
       obscureText: isPassword,
       validator: validator,
       decoration: InputDecoration(
+
         labelText: label!,
         labelStyle: TextStyle(
             color: HexColor(hint),
@@ -162,18 +164,31 @@ Widget commonInputField({
       ),
     );
 
-
-
 Widget commonDropDownField(
-        {required itemChoose,
-        required String labelTxt,
-        String? infPhotoPath,
-        required List<ListDataModel> itemDataList,
-        required Function onDropDownItemSelected }) =>
-    SizedBox(
-      height: 61.2,
+        {
+
+          String? Function(ListDataModel?)? validator, // New validator argument
+          required itemChoose,
+          required String labelTxt,
+          String? infPhotoPath,
+          required List<ListDataModel> itemDataList,
+          required bool isValidationInProgress,
+
+          required Function onDropDownItemSelected}) {
+
+  double height = (isValidationInProgress ? 80.0 : 61.2);
+
+
+  return SizedBox(
+    height:  height, // Adjust height based on whether there's an error
+
       child: DropdownButtonFormField2<ListDataModel>(
+
+        validator: validator, // Assign validator to DropdownButtonFormField
         decoration: InputDecoration(
+
+
+
           labelText: labelTxt,
           labelStyle: TextStyle(
               color:
@@ -224,24 +239,24 @@ Widget commonDropDownField(
             .map<DropdownMenuItem<ListDataModel>>((ListDataModel value) {
           return DropdownMenuItem(
             value: value,
-            child: value.infoLogoPath!=null?Row(
-              children: [
-                setPhoto(
-                  kind: 1,
-                  path: value.infPhotoPath,
-                ),
-                const SizedBox(
-                  width: 16,
-                ),
-                Text(value.infoName),
-              ],
-            ):Row(
-              children: [
-
-
-                Text(value.infoName),
-              ],
-            ),
+            child: value.infoLogoPath != null
+                ? Row(
+                    children: [
+                      setPhoto(
+                        kind: 1,
+                        path: value.infPhotoPath,
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Text(value.infoName),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      Text(value.infoName),
+                    ],
+                  ),
           );
         }).toList(),
         isExpanded: true,
@@ -252,3 +267,4 @@ Widget commonDropDownField(
         },
       ),
     );
+}
