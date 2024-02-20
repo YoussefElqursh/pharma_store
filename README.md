@@ -36,4 +36,4 @@
 
               2- presentation => https://www.canva.com/design/DAF9W6cqU8k/f1qbQ7zum7QOUd9BqhBSlw/view?utm_content=DAF9W6cqU8k&utm_campaign=designshare&utm_medium=link&utm_source=editor
 
-              3- UI/UX => 
+              3- UI/UX => https://www.figma.com/file/zYyA5d3iRp0xKBHRtSSOtq/Pharma-Store-User-Area-UI?type=design&node-id=7%3A106&mode=design&t=q6HshcT4ZCLFiuYZ-1
