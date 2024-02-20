@@ -30,3 +30,10 @@
 ## What we use
               1- When we develop this app use Flutter as Platform.
               2- use dart as Programming Language
+
+## our resources
+              1- Back-end => https://github.com/AhmedMohamed-16/nestjs-proj-graduate.git
+
+              2- presentation => https://www.canva.com/design/DAF9W6cqU8k/f1qbQ7zum7QOUd9BqhBSlw/view?utm_content=DAF9W6cqU8k&utm_campaign=designshare&utm_medium=link&utm_source=editor
+
+              3- UI/UX => 
