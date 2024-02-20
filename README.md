@@ -19,7 +19,7 @@
 
 ![Create2](https://github.com/youssef883/pharma_store/assets/79144849/6e72380a-069d-4e5a-bc25-e1a1f62dccf1)
 
-                                    2- Second Function in app is Login Function, it's use two parameters username and password for scurity.
+                   2- Second Function in app is Login Function, it's use two parameters username and password for scurity.
                                     
 ![Login](https://github.com/youssef883/pharma_store/assets/79144849/fe5730ae-e518-4d63-8d3f-b3e681bf37b3)
 
