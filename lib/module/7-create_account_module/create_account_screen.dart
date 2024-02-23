@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -8,6 +9,8 @@ import '../../shared/components/constrants.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
 import '../../shared/styles/custom_checkbox.dart';
+import 'package:path/path.dart' as path; // Import the path package
+
 
 class CreateAccountScreen extends StatefulWidget {
   static const String routeName = 'CreateAccountScreenRoute';
@@ -19,22 +22,32 @@ class CreateAccountScreen extends StatefulWidget {
     );
   }
 
+  @override
   State<CreateAccountScreen> createState() => _ResetViaSmsScreenState();
 }
 
 class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   final _nameController = TextEditingController();
-  final _contactnumberController = TextEditingController();
+
+  final _contactNumberController = TextEditingController();
+  final _contactNumberController2 = TextEditingController();
+  final _contactNumberController3 = TextEditingController();
+
   final _addressController = TextEditingController();
   final _commercialController = TextEditingController();
   final _pharmacyPhotoController = TextEditingController();
-
-  final _licensenumberController = TextEditingController();
+  final _licenseNumberController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
-  final _phonenumberController = TextEditingController();
-  int _current_step = 0;
+  final _phoneNumberController = TextEditingController();
+
+  String ?pathCommercial;
+  String ?pathPharmaPhoto;
+
+  int currentStep = 0;
+
   ListDataModel? _countryChoose;
   List<ListDataModel> countryDataList = [
     ListDataModel(
@@ -54,12 +67,17 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
     ListDataModel(infoName: 'Abo Qir'),
   ];
 
+  bool isCustomIcon1=true;
+  bool isCustomIcon2=true;
+
+
   @override
   void initState() {
     super.initState();
     _countryChoose = null;
     _governmentChoose = null;
     _regionChoose = null;
+    countVisibleWidgets = 1;
   }
 
   void _onDropDownItemSelectedCountry(ListDataModel newSelectedCountry) {
@@ -78,7 +96,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
     });
   }
 
-  _onDropDownItemSelectedRegion(ListDataModel newSelectedRegion) {
+  void _onDropDownItemSelectedRegion(ListDataModel newSelectedRegion) {
     setState(() {
       _regionChoose != newSelectedRegion
           ? _regionChoose = newSelectedRegion
@@ -92,7 +110,36 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   final GlobalKey<FormState> _step4Key = GlobalKey<FormState>();
 
   bool _validationInProgress = false;
+  bool _displayNewTextField2 = false;
+  bool _displayNewTextField3 = false;
+  int countVisibleWidgets = 1;
 
+
+  void toggleNewTextFieldVisibilityAdd() {
+    setState(() {
+      if (countVisibleWidgets == 1) {
+        _displayNewTextField2 = true; // Display the second input field
+        countVisibleWidgets++;
+      } else if (countVisibleWidgets == 2) {
+// Display the third input field
+        _displayNewTextField3 = true;
+        countVisibleWidgets++;
+      }
+    });
+  }
+  void toggleNewTextFieldVisibilityRemove() {
+    setState(() {
+      if (countVisibleWidgets == 3) {
+// Hide the third input field
+        _displayNewTextField3 = false;
+
+        countVisibleWidgets--;
+      } else if (countVisibleWidgets == 2) {
+        _displayNewTextField2 = false; // Hide the second input field
+        countVisibleWidgets--;
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,11 +154,12 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                   bool hasValue = false;
 
                   // Check if any field in the stepper has a non-null value
-                  if (_current_step <= 3) {
+                  if (currentStep <= 3) {
                     // Check for fields in step 1
                     if (_nameController.text.isNotEmpty ||
                         _addressController.text.isNotEmpty ||
-                        _contactnumberController.text.isNotEmpty ||
+                        _contactNumberController.text.isNotEmpty ||
+                        _contactNumberController2.text.isNotEmpty ||
                         _countryChoose != null ||
                         _governmentChoose != null ||
                         _regionChoose != null) {
@@ -119,7 +167,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                     }
 
                     // Check for fields in step 2
-                    if (_licensenumberController.text.isNotEmpty ||
+                    if (_licenseNumberController.text.isNotEmpty ||
                         _commercialController.text.isNotEmpty ||
                         _pharmacyPhotoController.text.isNotEmpty) {
                       hasValue = true;
@@ -128,7 +176,8 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                     // Check for fields in step 3
                     if (_firstnameController.text.isNotEmpty ||
                         _lastnameController.text.isNotEmpty ||
-                        _phonenumberController.text.isNotEmpty) {
+                        _emailController.text.isNotEmpty ||
+                        _phoneNumberController.text.isNotEmpty) {
                       hasValue = true;
                     }
 
@@ -224,12 +273,15 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
           SizedBox(height: MediaQuery.of(context).size.height / 35),
           Stepper(
             controller: ScrollController(),
+            // connectorThickness: currentStep?2:0,
             connectorThickness: 0,
+            //Todo :i want to make  connectorThickness=0 when current opened else make it 2
+
             margin: const EdgeInsets.all(20),
-            currentStep: _current_step,
+            currentStep: currentStep,
             steps: getSteps(),
             controlsBuilder: (context, _) {
-              if (_current_step == 0) {
+              if (currentStep == 0) {
                 return Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     mainAxisSize: MainAxisSize.max,
@@ -246,7 +298,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                           borderColor: primaryColor,
                           hasIcon: true)
                     ]);
-              } else if (_current_step == 3) {
+              } else if (currentStep == 3) {
                 return Row(mainAxisSize: MainAxisSize.max, children: [
                   commonMaterialBtn(
                       hasIcon: true,
@@ -294,9 +346,6 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 ]);
               }
             },
-            onStepTapped: (step) => setState(() {
-              _current_step = step;
-            }),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -427,26 +476,74 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               SizedBox(height: MediaQuery.of(context).size.height / 42.835),
               commonInputField(
                   function: () {
-                    print("object");
+                    toggleNewTextFieldVisibilityAdd();
                   },
                   isCustomIcon: true,
-                  photoHight: MediaQuery.of(context).size.height / 16,
+                  photoHeight: MediaQuery.of(context).size.height / 16,
                   suffixIconPth: "assets/icons/Group 61.svg",
                   label: 'Contact number*',
                   textType: TextInputType.phone,
-                  controller: _contactnumberController,
+                  controller: _contactNumberController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'please, Enter contact number';
                     }
                     return null;
                   }),
+              Visibility(
+                  visible: _displayNewTextField2,
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height / 42.835)),
+              Visibility(
+                visible: _displayNewTextField2,
+                child: commonInputField(
+                    function: () {
+                      // Todo:create new contact number field  with common input field when call this function  to add new contact number maximum common fields are 3
+                      toggleNewTextFieldVisibilityRemove();
+                    },
+                    isCustomIcon: true,
+                    photoHeight: MediaQuery.of(context).size.height / 16,
+                    suffixIconPth: "assets/icons/Group 62.svg",
+                    label: 'Contact number*',
+                    textType: TextInputType.phone,
+                    controller: _contactNumberController2,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please, Enter another contact number';
+                      }
+                      return null;
+                    }),
+              ),
+              Visibility(
+                  visible: _displayNewTextField3,
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height / 42.835)),
+              Visibility(
+                visible: _displayNewTextField3,
+                child: commonInputField(
+                    function: () {
+                      // Todo:create new contact number field  with common input field when call this function  to add new contact number maximum common fields are 3
+                      toggleNewTextFieldVisibilityRemove();
+                    },
+                    isCustomIcon: true,
+                    photoHeight: MediaQuery.of(context).size.height / 16,
+                    suffixIconPth: "assets/icons/Group 62.svg",
+                    label: 'Contact number*',
+                    textType: TextInputType.phone,
+                    controller: _contactNumberController3,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please, Enter another contact number';
+                      }
+                      return null;
+                    }),
+              ),
               SizedBox(height: MediaQuery.of(context).size.height / 21.4175),
             ],
           ),
         ),
-        isActive: _current_step >= 0,
-        state: _current_step <= 0 ? StepState.indexed : StepState.complete,
+        isActive: currentStep >= 0,
+        state: currentStep <= 0 ? StepState.indexed : StepState.complete,
       ),
       Step(
         title: Text("STEP 2",
@@ -467,9 +564,9 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
             children: [
               commonInputField(
                   label: 'License number*',
-                  photoHight: MediaQuery.of(context).size.height / 16,
+                  photoHeight: MediaQuery.of(context).size.height / 16,
                   textType: TextInputType.phone,
-                  controller: _licensenumberController,
+                  controller: _licenseNumberController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'please, Enter license number ';
@@ -478,38 +575,109 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                   }),
               SizedBox(height: MediaQuery.of(context).size.height / 42.835),
               commonInputField(
-                  isCustomIcon: true,
-                  suffixIconPth: "assets/icons/filled.svg",
-                  label: 'Commercial register*',
-                  photoHight: MediaQuery.of(context).size.height / 16,
-                  textType: TextInputType.phone,
-                  controller: _commercialController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'please, Enter commercial register ';
+                isCustomIcon: isCustomIcon1,
+                isReadOnly: true,
+                photoHeight: 55.0,
+                controller: _commercialController,
+                validator: (value) {
+
+                  if (value!.isEmpty) {
+                    return 'please, Commercial Register*';
+                  }
+                  return null;
+                },
+                suffixIconPth: "assets/icons/filled.svg",
+                suffixIconData: Icons.delete_sharp,
+                suffixIconCol: error,
+                label: "Commercial Register*",
+                function: () async {
+                  // Toggle between different functions and icons
+                  if (isCustomIcon1) {
+                    // Function for custom icon
+                    try {
+                      FilePickerResult? result = await FilePicker.platform.pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions: ['pdf'],
+                      );
+
+                      if (result != null) {
+                        setState(() {
+                          pathCommercial = result.files.single.path!;
+                          _commercialController.text = path.basename(pathCommercial!);
+                          isCustomIcon1 = !isCustomIcon1;
+                        });
+                        print('Selected PDF path: $pathCommercial');
+                      } else {
+                        print('User canceled the file picker');
+                      }
+                    } catch (e) {
+                      print('Error while picking the file: $e');
                     }
-                    return null;
-                  }),
+                  } else {
+                    // Function for regular icon
+                    setState(() {
+                      _commercialController.clear();
+                      isCustomIcon1 = !isCustomIcon1;
+                    });
+                  }
+                },
+              ),
               SizedBox(height: MediaQuery.of(context).size.height / 42.835),
-              commonInputField(
-                  isCustomIcon: true,
-                  suffixIconPth: "assets/icons/filled.svg",
-                  label: 'Pharmacy photo*',
-                  photoHight: MediaQuery.of(context).size.height / 16,
-                  textType: TextInputType.text,
-                  controller: _pharmacyPhotoController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'please, Enter pharmacy photo';
+              commonInputField
+                (
+                isCustomIcon: isCustomIcon2,
+                isReadOnly: true,
+                photoHeight: 55.0,
+                controller: _pharmacyPhotoController,
+                validator: (value) {
+
+                  if (value!.isEmpty) {
+                    return 'please, Enter Pharmacy Photo*';
+                  }
+                  return null;
+                },
+                suffixIconPth: "assets/icons/filled.svg",
+                suffixIconData: Icons.delete_rounded,
+                suffixIconCol:error,
+                label: "Pharmacy Photo*",
+                function: () async {
+                  // Toggle between different functions and icons
+                  if (isCustomIcon2) {
+                    // Function for custom icon
+                    try {
+                      FilePickerResult? result = await FilePicker.platform.pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions: ['pdf'],
+                      );
+
+                      if (result != null) {
+                        setState(() {
+                          pathPharmaPhoto = result.files.single.path!;
+                          _pharmacyPhotoController.text = path.basename(pathPharmaPhoto!);
+                          isCustomIcon2 = !isCustomIcon2;
+                        });
+                        print('Selected PDF path: $pathPharmaPhoto');
+                      } else {
+                        print('User canceled the file picker');
+                      }
+                    } catch (e) {
+                      print('Error while picking the file: $e');
                     }
-                    return null;
-                  }),
+                  } else {
+                    // Function for regular icon
+                    setState(() {
+                      _pharmacyPhotoController.clear();
+                      isCustomIcon2 = !isCustomIcon2;
+                    });
+                  }
+                },
+              ),
               SizedBox(height: MediaQuery.of(context).size.height / 21.4175),
             ],
           ),
         ),
-        isActive: _current_step >= 1,
-        state: _current_step <= 1 ? StepState.indexed : StepState.complete,
+        isActive: currentStep >= 1,
+        state: currentStep <= 1 ? StepState.indexed : StepState.complete,
       ),
       Step(
         title: Text(
@@ -557,10 +725,10 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               commonInputField(
                   label: 'Email(optional)',
                   textType: TextInputType.emailAddress,
-                  controller: _phonenumberController,
+                  controller: _emailController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'please, Enter phone number';
+                      return 'please, Enter email';
                     }
                     return null;
                   }),
@@ -568,7 +736,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               commonInputField(
                   label: 'Phone number*',
                   textType: TextInputType.phone,
-                  controller: _licensenumberController,
+                  controller: _phoneNumberController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'please, Enter phone number';
@@ -579,8 +747,8 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
             ],
           ),
         ),
-        isActive: _current_step >= 2,
-        state: _current_step <= 2 ? StepState.indexed : StepState.complete,
+        isActive: currentStep >= 2,
+        state: currentStep <= 2 ? StepState.indexed : StepState.complete,
       ),
       Step(
         title: Text(
@@ -630,35 +798,35 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
             ],
           ),
         ),
-        isActive: _current_step >= 3,
-        state: _current_step <= 3 ? StepState.indexed : StepState.complete,
+        isActive: currentStep >= 3,
+        state: currentStep <= 3 ? StepState.indexed : StepState.complete,
       )
     ];
   }
 
   onStepContinue() {
-    if (_current_step == 0) {
+    if (currentStep == 0) {
       if (_step1Key.currentState!.validate()) {
         // Proceed to the next step
         setState(() {
-          _current_step++;
+          currentStep++;
         });
       }
-    } else if (_current_step == 1) {
+    } else if (currentStep == 1) {
       if (_step2Key.currentState!.validate()) {
         // Proceed to the next step
         setState(() {
-          _current_step++;
+          currentStep++;
         });
       }
-    } else if (_current_step == 2) {
+    } else if (currentStep == 2) {
       if (_step3Key.currentState!.validate()) {
         // Proceed to the next step
         setState(() {
-          _current_step++;
+          currentStep++;
         });
       }
-    } else if (_current_step == 3) {
+    } else if (currentStep == 3) {
       if (_step4Key.currentState!.validate()) {
         showDialog(
             context: context,
@@ -681,9 +849,9 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   } //to move next step and display the list in each step
 
   onStepCancel() {
-    if (_current_step > 0) {
+    if (currentStep > 0) {
       setState(() {
-        _current_step -= 1;
+        currentStep -= 1;
       });
     }
   } //to cancel and close the opened list and move the previous step
