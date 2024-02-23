@@ -29,18 +29,18 @@ kind: it's required and have 4 values 0,1,2,3.
 3: SvgPicture => from network svg.
 path: this is path of picture.
 */
-Widget setPhoto({required int kind, required String path, double? height, double? width}){
+Widget setPhoto({required int kind,  String ?path, double? height, double? width}){
   if(kind==0){
-    return Image.asset(path, height: height, width: width);
+    return Image.asset(path!, height: height, width: width);
   }
   else if(kind==1){
-    return SvgPicture.asset(path, height: height, width: width);
+    return SvgPicture.asset(path!, height: height, width: width);
   }
   else if(kind==2){
-    return Image.network(path, height: height, width: width);
+    return Image.network(path!, height: height, width: width);
   }
   else if(kind==3){
-    return SvgPicture.network(path, height: height, width: width);
+    return SvgPicture.network(path!, height: height, width: width);
   }
   else{
     return const Text("error");
