@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
+import '../../shared/styles/custom_checkbox.dart';
 import '../7-create_account_module/create_account_screen.dart';
 
 
@@ -92,15 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Checkbox(
-                        overlayColor: MaterialStatePropertyAll(HexColor(placeholder)),
-                        hoverColor: HexColor(hint),
-                        side: BorderSide(color: HexColor(hint)),
-                        value: isChecked,
-                        onChanged: (value){setState(() {
-                           isChecked = value!;
-                           });
+                    CustomCheckbox(
+                        onChanged: (value){
+                          setState((){isChecked = value!;});
                         }),
+
+                    SizedBox(width: 5.w),
 
                     Text(
                         "Remember me",

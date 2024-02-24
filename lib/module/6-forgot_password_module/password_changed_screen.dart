@@ -16,11 +16,12 @@ class PasswordChangedScreen extends StatefulWidget {
     );
   }
 
+  @override
   State<PasswordChangedScreen> createState() => _ResetViaSmsScreenState();
 }
 
 class _ResetViaSmsScreenState extends State<PasswordChangedScreen> {
-  final _phoneController = TextEditingController();
+  //final _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
 

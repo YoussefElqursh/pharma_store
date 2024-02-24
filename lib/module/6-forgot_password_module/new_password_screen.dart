@@ -18,12 +18,13 @@ class NewPasswordScreen extends StatefulWidget {
     );
   }
 
+  @override
   State<NewPasswordScreen> createState() => _ResetViaEmailScreenState();
 }
 
 class _ResetViaEmailScreenState extends State<NewPasswordScreen> {
   final _passController1 = TextEditingController();
-  final _passController2 = TextEditingController();
+  //final _passController2 = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 

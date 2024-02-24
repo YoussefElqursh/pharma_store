@@ -1,19 +1,17 @@
 class ListDataModel {
   final String infoName;
-  final String ?infoLogoPath;
-
+  final String? infoLogoPath;
 
   ListDataModel({
     required this.infoName,
-     this.infoLogoPath,
+    this.infoLogoPath,
   });
 
   get infPhotoPath {
     return infoLogoPath;
   }
+
   get infName {
     return infoName;
   }
-
-
 }

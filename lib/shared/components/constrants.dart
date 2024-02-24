@@ -1,9 +1,9 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pharma_store/shared/styles/colors.dart';
+import '../../model/create_account_model/dropdown_model.dart';
 import '../../model/onboarding_model/onboarding_model.dart';
 
 // this is lis use to make different data in OnBoarding page view.
@@ -25,7 +25,28 @@ List<OnBoardingModel> boardingList = [
           'Your financial security is our top priority.Link bank accounts and credit cards for safe, hassle-free payments.'),
 ];
 
+List<ListDataModel> countryDataList = [
+  ListDataModel(
+      infoName: 'Egypt',
+      infoLogoPath: "assets/icons/Password-field.svg"),
+  ListDataModel(
+      infoName: 'Tunisia',
+      infoLogoPath: "assets/icons/TN.svg"),
+];
 
+List<ListDataModel> governmentDataList = [
+  ListDataModel(
+      infoName: 'Alexandria'),
+  ListDataModel(
+      infoName: 'Tanta')
+];
+
+List<ListDataModel> regionDataList = [
+  ListDataModel(
+      infoName: 'Asfra 45st'),
+  ListDataModel(
+      infoName: 'Abo Qir'),
+];
 
 Widget privacyPolicyLinkAndTermsOfService() {
   return Container(

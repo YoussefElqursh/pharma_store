@@ -19,6 +19,7 @@ class VerifyEmailScreen extends StatefulWidget {
     );
   }
 
+  @override
   State<VerifyEmailScreen> createState() => _ResetViaSmsScreenState();
 }
 
@@ -34,8 +35,6 @@ class _ResetViaSmsScreenState extends State<VerifyEmailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenSize = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize:
@@ -90,7 +89,9 @@ class _ResetViaSmsScreenState extends State<VerifyEmailScreen> {
                       height: 45,
                       child: TextFormField(
                         controller: _digitController1,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(1),
                           FilteringTextInputFormatter.digitsOnly
@@ -130,7 +131,9 @@ class _ResetViaSmsScreenState extends State<VerifyEmailScreen> {
                       height: 45,
                       child: TextFormField(
                         controller: _digitController2,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(1),
                           FilteringTextInputFormatter.digitsOnly
@@ -170,7 +173,9 @@ class _ResetViaSmsScreenState extends State<VerifyEmailScreen> {
                       height: 45,
                       child: TextFormField(
                         controller: _digitController3,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(1),
                           FilteringTextInputFormatter.digitsOnly
@@ -210,7 +215,9 @@ class _ResetViaSmsScreenState extends State<VerifyEmailScreen> {
                       height: 45,
                       child: TextFormField(
                         controller: _digitController4,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(1),
                           FilteringTextInputFormatter.digitsOnly
@@ -250,7 +257,9 @@ class _ResetViaSmsScreenState extends State<VerifyEmailScreen> {
                       height: 45,
                       child: TextFormField(
                         controller: _digitController5,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(1),
                           FilteringTextInputFormatter.digitsOnly
@@ -290,7 +299,9 @@ class _ResetViaSmsScreenState extends State<VerifyEmailScreen> {
                       height: 45,
                       child: TextFormField(
                         controller: _digitController6,
-                        validator: (value) {},
+                        validator: (value) {
+                          return null;
+                        },
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(1),
                           FilteringTextInputFormatter.digitsOnly

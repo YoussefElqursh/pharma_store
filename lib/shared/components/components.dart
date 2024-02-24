@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-import '../../model/dropdown_model/dropdown_model.dart';
+
+import '../../model/create_account_model/dropdown_model.dart';
 import '../styles/colors.dart';
 import 'functions.dart';
 

@@ -18,6 +18,7 @@ class ResetViaEmailScreen extends StatefulWidget {
     );
   }
 
+  @override
   State<ResetViaEmailScreen> createState() => _ResetViaEmailScreenState();
 }
 

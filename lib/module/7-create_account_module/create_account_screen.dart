@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pharma_store/module/5-login_module/login_screen.dart';
-import '../../model/dropdown_model/dropdown_model.dart';
+import '../../model/create_account_model/dropdown_model.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/constrants.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
 import '../../shared/styles/custom_checkbox.dart';
+
 import 'package:path/path.dart' as path; // Import the path package
 
 
@@ -49,23 +50,8 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
   int currentStep = 0;
 
   ListDataModel? _countryChoose;
-  List<ListDataModel> countryDataList = [
-    ListDataModel(
-        infoName: 'Egypt', infoLogoPath: "assets/icons/Password-field.svg"),
-    ListDataModel(infoName: 'Tunisia', infoLogoPath: "assets/icons/TN.svg"),
-  ];
-
   ListDataModel? _governmentChoose;
-  List<ListDataModel> governmentDataList = [
-    ListDataModel(infoName: 'Alexandria'),
-    ListDataModel(infoName: 'Tanta')
-  ];
-
   ListDataModel? _regionChoose;
-  List<ListDataModel> regionDataList = [
-    ListDataModel(infoName: 'Asfra 45st'),
-    ListDataModel(infoName: 'Abo Qir'),
-  ];
 
   bool isCustomIcon1=true;
   bool isCustomIcon2=true;
@@ -192,7 +178,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          contentPadding: EdgeInsets.all(24.0),
+                          contentPadding: const EdgeInsets.all(24.0),
                           title: const Text(
                             "Discard creating account?",
                             maxLines: 1,
@@ -216,7 +202,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                               },
                               child: const Text("Cancel"),
                             ),
-                            SizedBox(width: 31),
+                            const SizedBox(width: 31),
                             commonMaterialBtn(
                               containerColor: primaryColor,
                               label: "Discard",
@@ -855,22 +841,4 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
       });
     }
   } //to cancel and close the opened list and move the previous step
-}
-
-class CountryListDataModel {
-  String country_name;
-  String country_logo_path;
-  CountryListDataModel(this.country_name, this.country_logo_path);
-}
-
-class GovernmentListDataModel {
-  String government_name;
-  String government_logo_path;
-  GovernmentListDataModel(this.government_name, this.government_logo_path);
-}
-
-class RegionListDataModel {
-  String region_name;
-  String region_logo_path;
-  RegionListDataModel(this.region_name, this.region_logo_path);
 }
