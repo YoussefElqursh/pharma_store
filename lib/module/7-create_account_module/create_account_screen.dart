@@ -461,7 +461,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                   }),
               SizedBox(height: MediaQuery.of(context).size.height / 42.835),
               commonInputField(
-                  function: () {
+                  suffixPressed: () {
                     toggleNewTextFieldVisibilityAdd();
                   },
                   isCustomIcon: true,
@@ -483,7 +483,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               Visibility(
                 visible: _displayNewTextField2,
                 child: commonInputField(
-                    function: () {
+                    suffixPressed: () {
                       // Todo:create new contact number field  with common input field when call this function  to add new contact number maximum common fields are 3
                       toggleNewTextFieldVisibilityRemove();
                     },
@@ -507,7 +507,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
               Visibility(
                 visible: _displayNewTextField3,
                 child: commonInputField(
-                    function: () {
+                    suffixPressed: () {
                       // Todo:create new contact number field  with common input field when call this function  to add new contact number maximum common fields are 3
                       toggleNewTextFieldVisibilityRemove();
                     },
@@ -576,7 +576,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 suffixIconData: Icons.delete_sharp,
                 suffixIconCol: error,
                 label: "Commercial Register*",
-                function: () async {
+                suffixPressed: () async {
                   // Toggle between different functions and icons
                   if (isCustomIcon1) {
                     // Function for custom icon
@@ -626,7 +626,7 @@ class _ResetViaSmsScreenState extends State<CreateAccountScreen> {
                 suffixIconData: Icons.delete_rounded,
                 suffixIconCol:error,
                 label: "Pharmacy Photo*",
-                function: () async {
+                suffixPressed: () async {
                   // Toggle between different functions and icons
                   if (isCustomIcon2) {
                     // Function for custom icon

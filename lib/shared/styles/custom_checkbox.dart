@@ -39,11 +39,14 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
         width: widget.width,
         height: widget.height,
         decoration: BoxDecoration(
-          color: isChecked ? HexColor(primaryColor) : Colors.white, // Set background color here
+          color: isChecked
+              ? HexColor(primaryColor)
+              : Colors.white, // Set background color here
 
           border: Border.all(
-
-            color: isChecked ? HexColor(primaryColor) :  HexColor(placeholder), // Set color based on checked state
+            color: isChecked
+                ? HexColor(primaryColor)
+                : HexColor(placeholder), // Set color based on checked state
 
             width: 2.0,
           ),
@@ -51,10 +54,10 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
         ),
         child: isChecked
             ? Icon(
-          Icons.check,
-          size: 12,
-          color: HexColor(white100),
-        )
+                Icons.check,
+                size: 12,
+                color: HexColor(white100),
+              )
             : null,
       ),
     );

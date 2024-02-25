@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-
 import '../../model/create_account_model/dropdown_model.dart';
 import '../styles/colors.dart';
 import 'functions.dart';
@@ -104,12 +103,12 @@ Widget commonTextBtn({@required String? label, @required function}) => InkWell(
 
 //this is widget use to make stander InputField in app
 Widget commonInputField({
-  String ?txtFileName,
+  String? txtFileName,
   TextInputType textType = TextInputType.text,
   TextEditingController? controller,
   Icon? prefixIcon,
   IconData? suffixIconData,
-  String ?suffixIconPth ,
+  String? suffixIconPth,
   double cursorWidth = 2.0,
   bool isReadOnly = false,
   double? photoHeight,
@@ -120,12 +119,10 @@ Widget commonInputField({
   String suffixIconCol = placeholder,
   String? label,
   String? Function(String?)? validator,
-  VoidCallback? function,
-
+  VoidCallback? suffixPressed,
 }) =>
     TextFormField(
       readOnly: isReadOnly,
-
       cursorWidth: cursorWidth,
       controller: controller,
       keyboardType: textType,
@@ -154,7 +151,7 @@ Widget commonInputField({
         prefixIcon: prefixIcon,
         suffixIcon: isCustomIcon
             ? InkWell(
-                onTap: function,
+                onTap: suffixPressed,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 4.0),
                   child: setPhoto(
@@ -164,7 +161,7 @@ Widget commonInputField({
                       width: photoWidth),
                 ))
             : IconButton(
-                onPressed: function,
+                onPressed: suffixPressed,
                 icon: Icon(suffixIconData,
                     color: HexColor(suffixIconCol), size: 25),
               ),
@@ -258,5 +255,3 @@ Widget commonDropDownField(
     ),
   );
 }
-
-
