@@ -1,5 +1,13 @@
+import 'dropdown_model.dart';
+
 class GovernmentListDataModel {
-  String government_name;
-  String government_logo_path;
-  GovernmentListDataModel(this.government_name, this.government_logo_path);
+  String governmentName;
+  String governmentLogoPath;
+  GovernmentListDataModel(this.governmentName, this.governmentLogoPath);
 }
+List<ListDataModel> governmentDataList = [
+  ListDataModel(
+      infoName: 'Alexandria'),
+  ListDataModel(
+      infoName: 'Tanta')
+];

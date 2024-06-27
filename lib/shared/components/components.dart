@@ -138,7 +138,7 @@ Widget commonInputField({
             fontSize: 14),
         border: const OutlineInputBorder(),
         contentPadding:
-            EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
+            EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
           borderSide: BorderSide(
@@ -170,88 +170,82 @@ Widget commonInputField({
 
 Widget commonDropDownField(
     {String? Function(ListDataModel?)? validator, // New validator argument
-    required itemChoose,
-    required String labelTxt,
-    String? infPhotoPath,
-    required List<ListDataModel> itemDataList,
-    required bool isValidationInProgress,
-    required Function onDropDownItemSelected}) {
-  double height = (isValidationInProgress ? 80.0 : 61.2);
+      required itemChoose,
+      required String labelTxt,
+      String? infPhotoPath,
+      required List<ListDataModel> itemDataList,
+      required Function onDropDownItemSelected}) {
 
-  return SizedBox(
-    height: height, // Adjust height based on whether there's an error
-
-    child: DropdownButtonFormField2<ListDataModel>(
-      validator: validator, // Assign validator to DropdownButtonFormField
-      decoration: InputDecoration(
-        labelText: labelTxt,
-        labelStyle: TextStyle(
-            color: HexColor(hint),
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.w400,
-            fontSize: 14),
-        contentPadding:
-            EdgeInsets.symmetric(vertical: 15.0.h, horizontal: 15.0.w),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4.0),
-          borderSide: BorderSide(
-              color: HexColor(placeholder),
-              width: 1.0), // Change the color as desired
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4.0),
-          borderSide: BorderSide(
-              color: HexColor(primaryColor),
-              width: 1.0), // Change the color as desired
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
-        ),
-// Add more decoration..
+  return DropdownButtonFormField2<ListDataModel>(
+    validator: validator, // Assign validator to DropdownButtonFormField
+    decoration: InputDecoration(
+      labelText: labelTxt,
+      labelStyle: TextStyle(
+          color: HexColor(hint),
+          fontFamily: "Poppins",
+          fontWeight: FontWeight.w400,
+          fontSize: 14),
+      contentPadding:
+      EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4.0),
+        borderSide: BorderSide(
+            color: HexColor(placeholder),
+            width: 1.0), // Change the color as desired
       ),
-      iconStyleData: IconStyleData(
-          openMenuIcon: const Icon(Icons.arrow_drop_up),
-          iconEnabledColor: HexColor(dark),
-          iconDisabledColor: HexColor(dark)),
-      dropdownStyleData: DropdownStyleData(
-          decoration: BoxDecoration(
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4.0),
+        borderSide: BorderSide(
+            color: HexColor(primaryColor),
+            width: 1.0), // Change the color as desired
+      ),
+      border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(4),
-      )),
-      style: TextStyle(
-        fontSize: 14,
-        color: HexColor(dark),
-        fontFamily: "Poppins",
       ),
-      items: itemDataList
-          .map<DropdownMenuItem<ListDataModel>>((ListDataModel value) {
-        return DropdownMenuItem(
-          value: value,
-          child: value.infoLogoPath != null
-              ? Row(
-                  children: [
-                    setPhoto(
-                      kind: 1,
-                      path: value.infPhotoPath,
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Text(value.infoName),
-                  ],
-                )
-              : Row(
-                  children: [
-                    Text(value.infoName),
-                  ],
-                ),
-        );
-      }).toList(),
-      isExpanded: true,
-      isDense: true,
-      value: itemChoose,
-      onChanged: (ListDataModel? newSelectedCountry) {
-        onDropDownItemSelected(newSelectedCountry!);
-      },
+  // Add more decoration..
     ),
+    iconStyleData: IconStyleData(
+        openMenuIcon: const Icon(Icons.arrow_drop_up),
+        iconEnabledColor: HexColor(dark),
+        iconDisabledColor: HexColor(dark)),
+    dropdownStyleData: DropdownStyleData(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+        )),
+    style: TextStyle(
+      fontSize: 14,
+      color: HexColor(dark),
+      fontFamily: "Poppins",
+    ),
+    items: itemDataList
+        .map<DropdownMenuItem<ListDataModel>>((ListDataModel value) {
+      return DropdownMenuItem(
+        value: value,
+        child: value.infoLogoPath != null
+            ? Row(
+          children: [
+            setPhoto(
+              kind: 1,
+              path: value.infPhotoPath,
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            Text(value.infoName),
+          ],
+        )
+            : Row(
+          children: [
+            Text(value.infoName),
+          ],
+        ),
+      );
+    }).toList(),
+    isExpanded: true,
+    isDense: true,
+    value: itemChoose,
+    onChanged: (ListDataModel? newSelectedCountry) {
+      onDropDownItemSelected(newSelectedCountry!);
+    },
   );
 }

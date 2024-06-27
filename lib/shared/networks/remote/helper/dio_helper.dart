@@ -1,18 +1,20 @@
 import 'package:dio/dio.dart';
 
+import '../../end_points.dart';
+
 class DioHelper {
   static Dio? dio;
 
   static init() {
     dio = Dio(
       BaseOptions(
-          baseUrl: "https://student.valuexapps.com/api/",
+          baseUrl: baseUrl,
           receiveDataWhenStatusError: true,
           headers: {'Content-Type': 'application/json'}),
     );
   }
 
-  static Future<Response?> postData({
+  static Future<Response?>  postData({
     Map<String, dynamic>? query,
     required String url,
     required Map<String, dynamic> data,

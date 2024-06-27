@@ -48,6 +48,11 @@ dependencies:
   dropdown_button2: ^2.3.8
   contacts_service: ^0.6.3
   file_picker: ^6.1.1
+  syncfusion_flutter_charts: ^25.1.38
+  http: ^1.2.1
+  flutter_cache_manager: ^3.3.2
+  jwt_decoder: ^2.0.1
+
 
 dev_dependencies:
   flutter_test:

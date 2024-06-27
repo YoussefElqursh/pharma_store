@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharma_store/layout/home_layout/home_screen.dart';
 
 import '../../../../module/1-splash_module/splash_screen.dart';
 import '../../../../module/2-choose_language_module/choose_language_screen.dart';
@@ -17,6 +18,8 @@ import '../../../../module/7-create_account_module/create_account_screen.dart';
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case 'HomeScreenRoute':
+        return HomeScreen.route();
       case 'SplashScreenRoute':
         return SplashScreen.route();
       case 'LanguageScreenRoute':

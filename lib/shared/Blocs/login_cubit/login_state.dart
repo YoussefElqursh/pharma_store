@@ -1,16 +1,18 @@
 part of 'login_cubit.dart';
 
-abstract class LoginStates {}
+@immutable
+sealed class LoginAuthState {}
 
-class LoginInitialState extends LoginStates {}
+final class LoginAuthInitialState extends LoginAuthState {}
 
-class LoginLoadingState extends LoginStates {}
+final class LoginAuthLoadingState extends LoginAuthState {}
+final class LoginAuthLoggedOutState extends LoginAuthState {}
 
-class LoginSuccessState extends LoginStates {}
 
-class LoginErrorState extends LoginStates {
-  final String error;
-  LoginErrorState(this.error);
+final class LoginAuthSuccessState extends LoginAuthState {}
+
+final class LoginAuthErrorState extends LoginAuthState {
+  final String message;
+
+  LoginAuthErrorState({required this.message});
 }
-
-class LoginShowPasswordState extends LoginStates {}

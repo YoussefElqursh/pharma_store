@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pharma_store/shared/bloc_observer.dart';
+import 'package:pharma_store/shared/networks/local/cache_helper.dart';
 import 'package:pharma_store/shared/networks/local/router/app_router.dart';
-import 'package:pharma_store/shared/networks/remote/helper/dio_helper.dart';
 import 'package:pharma_store/shared/styles/colors.dart';
 
 import 'module/1-splash_module/splash_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
-  DioHelper.init();
+  await CacheHelper.cacheInitialization(); // Initialize CacheHelper
   runApp(const PharmaStore());
 }
 

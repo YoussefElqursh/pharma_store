@@ -1,5 +1,15 @@
+import 'dropdown_model.dart';
+
 class CountryListDataModel {
-  String country_name;
-  String country_logo_path;
-  CountryListDataModel(this.country_name, this.country_logo_path);
+  String countryName;
+  String countryLogoPath;
+  CountryListDataModel(this.countryName, this.countryLogoPath);
 }
+List<ListDataModel> countryDataList = [
+  ListDataModel(
+      infoName: 'Egypt',
+      infoLogoPath: "assets/icons/Password-field.svg"),
+  ListDataModel(
+      infoName: 'Tunisia',
+      infoLogoPath: "assets/icons/TN.svg"),
+];

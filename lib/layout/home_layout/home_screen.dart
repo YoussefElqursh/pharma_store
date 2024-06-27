@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  static const String routeName = 'HomeScreenRoute';
 
+  const HomeScreen({super.key});
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: routeName),
+      builder: (context) => const HomeScreen(),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

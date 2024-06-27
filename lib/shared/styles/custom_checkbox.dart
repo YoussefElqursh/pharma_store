@@ -33,7 +33,6 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
     return InkWell(
       onTap: () {
         setState(() => isChecked = !isChecked);
-        widget.onChanged?.call(isChecked);
       },
       child: Container(
         width: widget.width,

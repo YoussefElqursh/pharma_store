@@ -70,7 +70,9 @@ class GetStartedScreen extends StatelessWidget {
                   ),
                 ),
                 child: MaterialButton(
-                  onPressed: () { navigateTo(context, CreateAccountScreen.routeName); },
+                  onPressed: () {
+                    navigateTo(context, CreateAccountScreen.routeName);
+                    },
                   height: 52.h,
                   minWidth: double.infinity,
                   elevation: 0,
