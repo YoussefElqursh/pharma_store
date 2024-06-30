@@ -510,7 +510,7 @@ class _CreateAccountScreen extends State<CreateAccountScreen> {
                       // onPressed: () => print("hello"),
                       onPressed: () async {
                         // Store the cubit instance before the async operation
-
+                    //Todo: navigate to the home page
                         print("start registration");
                       },
                       child: const Text("OK"))

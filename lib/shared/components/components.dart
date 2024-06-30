@@ -137,8 +137,7 @@ Widget commonInputField({
             fontWeight: FontWeight.w400,
             fontSize: 14),
         border: const OutlineInputBorder(),
-        contentPadding:
-            EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 10.0.w),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
           borderSide: BorderSide(

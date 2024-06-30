@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pharma_store/shared/Blocs/login_cubit/login_cubit.dart';
 
-import '../../layout/home_layout/home_screen.dart';
+import '../../layout/home_layout/home_layout.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/functions.dart';
 import '../../shared/styles/colors.dart';
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state is LoginAuthSuccessState) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomeLayout()),
             );
           } else if (state is LoginAuthErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -160,11 +160,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           label: 'Login',
                           function: () {
                             if (formKey.currentState!.validate()) {
-                              LoginAuthCubit.get(context).userLogin(
-                                password: passwordController.text,
-                                username: emailController.text,
-                              );
-                              // Navigator.pushNamed(context, 'HomeScreenRoute');
+                              // LoginAuthCubit.get(context).userLogin(
+                              //   password: passwordController.text,
+                              //   username: emailController.text,
+                              // );
+                              Navigator.pushNamed(context, 'HomeLayoutRoute');
                             }
                           },
                           width: double.infinity,
